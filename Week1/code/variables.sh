@@ -1,13 +1,17 @@
 #!/bin/sh
-##Illustates the use of variables
-echo "This scripte was called with $# parameters"
+
+## Illustrates the use of variables 
+
+# Special variables
+
+echo "This script was called with $# parameters"
 echo "The script's name is $0"
 echo "The arguments are $@"
-echo "The rirst argument is $1"
+echo "The first argument is $1"
 echo "The second argument is $2"
 
-# Assigned Variables; Explicit declaration
-MY_VAR='some string'
+# Assigned Variables; Explicit declaration:
+MY_VAR='some string' 
 echo 'the current value of the variable is:' $MY_VAR
 echo
 echo 'Please enter a new string'
@@ -16,10 +20,11 @@ echo
 echo 'the current value of the variable is:' $MY_VAR
 echo
 
-##Assigned Variables; Reading (multiple values) from user input:
+## Assigned Variables; Reading (multiple values) from user input:
 echo 'Enter two numbers separated by space(s)'
 read a b
-echoecho 'you entered' $a 'and' $b '; Their sum is:'
+echo
+echo 'you entered' $a 'and' $b '; Their sum is:'
 
 ## Assigned Variables; Command substitution
 MY_SUM=$(expr $a + $b)
