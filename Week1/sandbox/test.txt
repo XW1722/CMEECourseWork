@@ -1,2 +1,5 @@
 My first line.
 My second line
+find . -type f -exec ls -s {} \; | sort -n | head -10
+test 		 test
+test 		 test
