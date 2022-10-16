@@ -12,7 +12,7 @@ else
             for i in $1/*.csv
             do
             echo "Converting the comma separated values to space separated ..."
-            newoutput = "${i#csv}.txt" # creating a new output to prevent pollution to the original file data
+            newoutput = "${i%.csv}.txt" # creating a new output to prevent pollution to the original file data
             cat $i | tr -s ',' '\b' > newoutput.csv # replacing the comma with spaces instead
             echo "Done!"
             done
@@ -21,7 +21,7 @@ else
                 for i in $1
                 do
                     echo "Converting the comma separated values to space separated ..."
-                    newoutput = "${i#csv}.txt"
+                    newoutput = "${i%.csv}.txt"
                     cat $i | tr -s ',' '\b' > newoutput.csv
                     echo "Done!"
                 done

@@ -1,18 +1,16 @@
 #1 - count the lines in each file
-wc -l 407228326.fasta 
-wc -l 407228412.fasta
-wc -l E.coli.fasta
+wc -l ../data/407228326.fasta 
+wc -l ../data/407228412.fasta
+wc -l ../data/E.coli.fasta
 
 #2 - printing starting from the second line for E.coli
-tail -n+2 E.coli.fasta
+tail -n+2 ../data/E.coli.fasta
 
 #3 - count the sequence length of the genome
-tail -n+2 E.coli.fasta | tr -d "\n" | wc -c
+tail -n+2 ../data/E.coli.fasta | tr -d "\n" | wc -c
 
 #4 - count the matches of "ATGC" in the genome of E. coli
-tail -n+2 E.coli.fasta | tr -d "\n" | grep -o ATGC E.coli.fasta | wc -l
+tail -n+2 ../data/E.coli.fasta | tr -d "\n" | grep -o ATGC ../data/E.coli.fasta | wc -l
 
 #5 - compute the AT/GC ratio
-tail -n +2 E.coli.fasta | tr -d "\n" | grep -o [A,T] E.coli.fasta | wc -l
-## divided by
-tail -n +2 E.coli.fasta | tr -d "\n" | grep -o [G,C] E.coli.fasta | wc -l
+echo $(tail -n +2 ../data/E.coli.fasta | tr -d "\n" | grep -o [A,T] ../data/E.coli.fasta | wc -l)/$(tail -n +2 ../data/E.coli.fasta | tr -d "\n" | grep -o [G,C] ../data/E.coli.fasta | wc -l) | bc -l

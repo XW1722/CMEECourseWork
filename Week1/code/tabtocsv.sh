@@ -7,7 +7,7 @@
 # Arguments: 1 -> tab delimited file
 # Date: Oct 2019
 
-if [ !-z "$1" ];then # check if the input is not empty
+if [ -n "$1" ];then # check if the input is not empty
     cat $1 | tr -s "\t" "," >> $1.csv # Creating a comma delimited version of $1 ...
     echo "Done!"
 else
