@@ -1,3 +1,6 @@
+from re import L
+import sys
+
 def foo_1(x):
     return x ** 0.5
 
@@ -34,3 +37,21 @@ def foo_6(x):
         facto = facto * x
         x = x - 1
     return facto
+
+def main(argv):
+    print(foo_1(1))
+    print(foo_2(2,1))
+    print(foo_2(1,2))
+    print(foo_3(3,2,1))
+    print(foo_3(2,3,1))
+    print(foo_3(3,1,2))
+    print(foo_3(1,2,3))
+    print(foo_4(1))
+    print(foo_5(1))
+    print(foo_5(10))
+    print(foo_6(1))
+    return 0
+
+if __name__ == "__main__":
+    status = main(sys.argv)
+    sys.exit(status)
