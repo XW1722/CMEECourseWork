@@ -39,4 +39,4 @@ def main(argv):
 if (__name__ == "__main__"):
     status = main(sys.argv)
 
-doctest.testmod()   # To run with embedded tests
+  # To run with embedded tests

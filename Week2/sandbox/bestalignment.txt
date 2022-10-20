@@ -1,0 +1,2 @@
+The best alignment is: ['CAATTCGGAT']
+The corresponding best score is: 7
