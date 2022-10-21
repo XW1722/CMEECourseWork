@@ -34,6 +34,7 @@ def main(argv):
         if is_an_oak(row[0]):
             print('FOUND AN OAK!\n')
             csvwrite.writerow([row[0], row[1]])    
+    return 0
     f.close()
     g.close()
 
