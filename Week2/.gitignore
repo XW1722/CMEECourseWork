@@ -1,2 +1,4 @@
-*~ 
-*.tmp
+./code/__pycache__/
+./results/.gitkeep
+./data/.RData
+./data/.Rhistory
