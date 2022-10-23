@@ -16,3 +16,4 @@ print(system.time(SumAllElements(M)))
 
 print("Using the in-built vectorized function, the time taken is: ")
 print(system.time(sum(M)))
+
