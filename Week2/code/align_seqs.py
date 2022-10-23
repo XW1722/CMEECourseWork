@@ -51,7 +51,7 @@ def calculate_score(s1, s2, l1, l2, startpoint):
 my_best_align = None
 my_best_score = -1
 
-h = open('../sandbox/bestalignment.txt','w')
+h = open('../results/bestalignment.txt','w')
 for i in range(l1): # Note that you just take the last alignment with the highest score
     z = calculate_score(s1, s2, l1, l2, i)
     if z > my_best_score:
