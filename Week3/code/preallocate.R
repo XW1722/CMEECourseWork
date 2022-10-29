@@ -6,7 +6,7 @@ NoPreallocFun <- function(x) {
         print(object.size(a))
     }
 }
-system.time(NoPreallocFun(10))
+system.time(NoPreallocFun(1000))
 
 PreallocFun <- function(x) {
     a <- rep(NA, x)
@@ -16,4 +16,4 @@ PreallocFun <- function(x) {
         print(object.size(a))
     }
 }
-system.time(PreallocFun(10))
+system.time(PreallocFun(1000))
