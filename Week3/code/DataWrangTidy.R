@@ -3,6 +3,12 @@
 ################################################################
 
 ############# Load the dataset ###############
+
+## loading the package
+install.packages("tidyverse")
+library(tidyr)
+library(dplyr)
+
 # header = false because the raw data don't have real headers
 MyData <- as.matrix(read.csv("../data/PoundHillData.csv", header = FALSE))
 
@@ -14,7 +20,7 @@ MyMetaData <- read.csv("../data/PoundHillMetaData.csv", header = TRUE, sep = ";"
 head(MyData)
 dim(MyData)
 str(MyData)
-fix(MyData) #you can also do this
+fix(MyData)
 fix(MyMetaData)
 
 ############# Transpose ###############
@@ -32,17 +38,10 @@ TempData <- as.data.frame(MyData[-1,],stringsAsFactors = F) #stringsAsFactors = 
 colnames(TempData) <- MyData[1,] # assign column names from original data
 
 ############# Convert from wide to long format  ###############
-require(reshape2) # load the reshape2 package
 
-?melt #check out the melt function
+MyWrangledData <- gather(TempData, key = "Species", value = "Count", 5:ncol(TempData))
 
-MyWrangledData <- melt(TempData, id=c("Cultivation", "Block", "Plot", "Quadrat"), variable.name = "Species", value.name = "Count")
-
-MyWrangledData[, "Cultivation"] <- as.factor(MyWrangledData[, "Cultivation"])
-MyWrangledData[, "Block"] <- as.factor(MyWrangledData[, "Block"])
-MyWrangledData[, "Plot"] <- as.factor(MyWrangledData[, "Plot"])
-MyWrangledData[, "Quadrat"] <- as.factor(MyWrangledData[, "Quadrat"])
-MyWrangledData[, "Count"] <- as.integer(MyWrangledData[, "Count"])
+MyWrangledData %>% transmute(Cultivation = as.factor(Cultivation), Block = as.factor(Block), Plot = as.factor(Plot), Quadrat = as.factor(Quadrat), Count = as.integer(Count))
 
 str(MyWrangledData)
 head(MyWrangledData)
