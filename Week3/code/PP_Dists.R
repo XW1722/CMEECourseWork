@@ -29,7 +29,7 @@ median_pred = c()
 for (each in category){
     par(mfg = c(n, 1))
     plot(density(log10(MyDF$Predator.mass[MyDF$Type.of.feeding.interaction == each])), 
-        xlab = "log10(Predator Mass(g))",
+        xlab = "log10(Pred Mass)",
         ylab = "Density",
         main = each)
     mean_pred <- c(mean_pred, log(mean(MyDF$Predator.mass[MyDF$Type.of.feeding.interaction == each])))
