@@ -1,8 +1,13 @@
+"""
+This script demonstrates the use of 
+"""
+
 from scipy import stats
 import numpy as np
 import scipy.integrate as integrate
 import matplotlib.pylab as p
 import matplotlib.pyplot as plt
+import sys
 
 def dCR_dt(pops, t=0):
     """
@@ -43,4 +48,14 @@ p.xlabel('Resource density')
 p.ylabel('Consumer density')
 p.title('Consumer-Resource population dynamics')
 
-f1.savefig('../results/LV_model.pdf') #Save figure
+# adjusting the space between subplots
+p.subplots_adjust(hspace = 1)
+
+def main():
+    """Define the main entrance of the function"""
+    f1.savefig('../results/LV_model.pdf') #Save figure
+
+if __name__ == "__main__":
+    """check if the script is run from main"""
+    status = main()
+    sys.exit(status)
