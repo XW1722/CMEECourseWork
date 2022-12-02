@@ -3,8 +3,6 @@ __date__ = "27 Nov 2022"
 
 # import packages
 import pandas as pd
-import scipy as sc
-import numpy as np
 
 # load data
 data_subset = pd.read_csv("../data/LogisticGrowthData.csv")

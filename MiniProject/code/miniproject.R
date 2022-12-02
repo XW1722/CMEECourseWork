@@ -45,10 +45,9 @@ gompertz_model <- function(t, r_max, N_max, N_0, t_lag){
 # Baranyi model
 baranyi_model <- function(t, N_0, N_max, r_max, t_lag){
     return(N_0 + r_max * (t + (1/r_max) * log(exp(-r_max * t)
-    + exp(-t_lag) - exp(-r_max * t - t_lag)))
-    -log(1+(exp(r_max*t + log(exp(-r_max*t+exp(-t_lag)-exp(-r_max*t-t_lag))))-1)
-    / exp(N_max - N_0))
-    )
+    + exp(-r_max * t_lag) - exp(-r_max * (t + t_lag))))
+    -log(1+(exp(r_max*t + log(exp(-r_max*t+exp(-r_max * t_lag)-exp(-r_max*(t+t_lag)))))-1)
+    / exp(N_max - N_0)))
 }
 
 # defining AIC and BIC calculation
@@ -78,7 +77,7 @@ for (i in unique(data_subset$ID)){
     N_0_start <- min(sub$log_pop)
     N_max_start <- max(sub$log_pop)
     n_row <- nrow(sub)
-    t <- as.numeric(sub$Time)
+    t <- seq(min(sub$Time), max(sub$Time), len=200)
     count <- count + 1
 
     # calculation of maximum growth rate
@@ -287,10 +286,10 @@ for (i in unique(data_subset$ID)){
         names(df6) <- c("Time", "pop", "model")
     }
 
-    AIC_list[[i]] <- c(count + 1, AIC_quadratic, AIC_cubic, AIC_logistic, AIC_gompertz, 
-                    AIC_baranyi, AIC_buchanan)
-    BIC_list[[i]] <- c(count + 1, BIC_quadratic, BIC_cubic, BIC_logistic, BIC_gompertz,
-                    BIC_baranyi, BIC_buchanan)
+    AIC_list[[i]] <- c(AIC_quadratic, AIC_cubic, AIC_logistic, AIC_gompertz, 
+                    AIC_baranyi)
+    BIC_list[[i]] <- c(BIC_quadratic, BIC_cubic, BIC_logistic, BIC_gompertz,
+                    BIC_baranyi)
 
     # Creating plots
     results <- rbind(df1, df2, df3, df4, df5, df6)
@@ -303,16 +302,33 @@ for (i in unique(data_subset$ID)){
     plot_list[[i]] <- p
 }
 
-AIC_data <- data.frame(do.call(cbind, AIC_list))
-AIC_data <- data.frame(AIC = c("", "quadratic", "cubic", "logistic",
-                    "gompertz", "baranyi", "buchanan"), AIC_data)
-BIC_data <- data.frame(do.call(cbind, BIC_list))
-BIC_data <- data.frame(BIC = c("", "quadratic", "cubic", "logistic",
-                    "gompertz", "baranyi", "buchanan"), BIC_data)
+# save and export data
+AIC_data <- data.frame(do.call(rbind, AIC_list))
+names(AIC_data) <- c("quadratic", "cubic", "logistic", "gompertz", "baranyi")
+BIC_data <- data.frame(do.call(rbind, BIC_list))
+names(BIC_data) <- c("quadratic", "cubic", "logistic", "gompertz", "baranyi")
 
+AIC_compare <- colnames(AIC_data)[as.numeric(apply(AIC_data, 1, which.min))]
+BIC_compare <- colnames(BIC_data)[as.numeric(apply(BIC_data, 1, which.min))]
+
+AIC_plot <- ggplot(data.frame(AIC_compare), aes(x = AIC_compare)) +
+                geom_bar()
+BIC_plot <- ggplot(data.frame(BIC_compare), aes(x = BIC_compare)) +
+                geom_bar()
+
+write.csv(AIC_data, "../results/AIC_comparison.csv")
+write.csv(BIC_data, "../results/BIC_comparison.csv")
 
 pdf("../results/plot_subsets.pdf")
 print(plot_list)
+graphics.off()
+
+pdf("../results/AIC_plot.pdf")
+print(AIC_plot)
+graphics.off()
+
+pdf("../results/BIC_plot.pdf")
+print(BIC_plot)
 graphics.off()
 
 ##################################
