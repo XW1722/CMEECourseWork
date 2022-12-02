@@ -39,13 +39,21 @@
 
 	\section{Introduction}
 
-	With the increasing interest in microbial growth, the suitability of models has become a popular topic due to their importance in bringing considerable savings caused by the challenge in laboratory testing \cite{Perni}.
-	
-	This report aims to find out the fitness of different mathematical models to functional response data across different species.
-	
-	the Non-Linear Least Squares approach is used as the biases are usually less by the smaller residuals. 
-
-	In this report, both linear and non-linear model fitting approaches have been used for the investigation, including the Logistic model, Gompertz model, Baranyi model and Buchanan model compared with quadratic and cubic models.
+	For decades, great attention has been paid to the study of microbial population growth and great number of studies have been conducted on this area. The impact of bacterial population growth rate on safety of food products is one of the major reasons attracting researchers to study in this field, such that effective intervention could be given to the process of production with useful and accurate prediction \cite{Nauta}. With the increasing interest in microbial growth, the suitability of models has become a popular topic due to their importance in bringing considerable savings caused by the challenge in laboratory testing \cite{Perni}. 
+	\bigbreak
+	\noindent In general, the bacterial growth contains several stages: the lag phase, exponential phase, stationary phase and the death phase \cite{Peleg and Corradini}. Several models have been developed for the evaluation of this, including phenomenological models - which are developed based on experimentally observed patterns instead of any basic principles; and another type called the mechanistic microbial growth model, which takes the theories into consideration \cite{Peleg and Corradini}. The objective of our study is to investigate the overall performance of different models applying to the microbial growth rate data across species. To achieve this, the Logistic model and modified Gompertz model are selected as a representative model for the phenomenological model, and will be compared to the Baranyi model, which is a mechanistic model. In addition to the non-linear models, the polynomial linear models will also be included in our study for comparison. Non-linear Least Squares approach is used for our study due to the smaller bias for the non-linear models. 
+	\bigbreak
+	\noindent This report will be divided into several parts:
+	\begin{itemize}
+	\item Methods
+	\\This section will include an overall description of the methods used in this study, including the process of the data, the expressions of the models used, the method for model fitting and the computing tools used to reproduce the procedure.
+	\item Results
+	\\The diagrams of the models and the results of model selection will be displayed in this section. A brief interpretation will be given along with the graphs.
+	\item Discussion
+	\\The discussion part will include the analysis of the results section, and the implication to reality with combination of several previous literature. The gaps for future work to cover will also be mentioned at the end of the discussion section.
+	\item Conclusion
+	\\The conclusion will summarise the key findings of this study.
+	\end{itemize}
 
 	\pagebreak
 
@@ -191,7 +199,7 @@
 			\begin{center}
 			\begin{minipage}{.5\textwidth}
 				\centering
-				\includegraphics[page=114, scale = 0.5]{plot_subsets.pdf}
+				\includegraphics[page=178, scale = 0.5]{plot_subsets.pdf}
 			\end{minipage}%
 			\begin{minipage}{.5\textwidth}
 				\centering
@@ -240,7 +248,7 @@
 	
 	\subsection{Findings and implications}
 	
-	Lag time is defined as the As shown in the results above, the performance of Quadratic and Cubic linear models are usually not able to predict the full trend in general. Although these models can predict the death phase, the overall AIC and BIC of linear models are higher than others. This could be because bacterial growth could usually be affected by various factors which may not be captured in the mathematical functions \cite{Sutherland and Norris}. For example, though both linear models show a good pattern for the exponential growth phase by the mathematical definition of expressions, both fail to catch the lag phase before the start of cell division. This is because though there has been evidence showing the possibility of cells needing time to divide, the models based on theory usually do not take the lag time into consideration, which causes the inaccuracy when studying the lag phase. By contrast, since it has been observed from laboratory data that the lag phase does exist before the start of exponential growth \cite{Rolfe et al.}Rolfe et al., 2019), the models based on phenomenological data usually provide better performance on the prediction of lag phase. Our result from the non-linear models can prove this. Though the fitting of the Baranyi model for the lag phase shows a slight deviation from the actual point, it could be due to several reasons:
+	As shown in the results above, the performance of Quadratic and Cubic linear models are usually not able to predict the full trend in general. Although these models can predict the death phase, the overall AIC and BIC of linear models are higher than others. This could be because bacterial growth could usually be affected by various factors which may not be captured in the mathematical functions \cite{Sutherland and Norris}. For example, though both linear models show a good pattern for the exponential growth phase by the mathematical definition of expressions, both fail to catch the lag phase before the start of cell division. This is because though there has been evidence showing the possibility of cells needing time to divide, the models based on theory usually do not take the lag time into consideration, which causes the inaccuracy when studying the lag phase. By contrast, since it has been observed from laboratory data that the lag phase does exist before the start of exponential growth \cite{Rolfe et al.}Rolfe et al., 2019), the models based on phenomenological data usually provide better performance on the prediction of lag phase. Our result from the non-linear models can prove this. Though the fitting of the Baranyi model for the lag phase shows a slight deviation from the actual point, it could be due to several reasons:
 	\begin{itemize}
 	\item The current studies on the lag phase are still not sufficient enough that the models cannot fit all lag phases well \cite{Rolfe et al.}. Due to the lack of data for the underlying molecular behavior and physiological processes, current studies on the lag phase is still poor. This could be a potential reason leading to the shortage of theoretical based models when predicting the behaviour of duration before the start of exponential growth.
 	\item Another possible reason is the limited sample data for the lag phase. According to Schmidt, the actual lag time has to be determined from the laboratory data instead of model \cite{Yilmaz}. Nevertheless, it is noticed that there are only a few points at the lag phase in our dataset, which could be a possible reason for an inaccurate estimate of the model.
