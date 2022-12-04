@@ -14,8 +14,6 @@ rm *.aux
 rm *.bbl
 rm *.blg
 rm *.log
-rm *.fdb_latexmk
-rm *.fls
 
 # setting the path
 mv *.pdf ../results/
