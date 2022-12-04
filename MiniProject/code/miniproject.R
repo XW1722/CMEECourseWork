@@ -7,9 +7,8 @@ rm(list = ls())
 
 # import the required packages
 require("ggplot2")
+require("stats")
 require("minpack.lm")
-require("tidyverse")
-require("tidyr")
 
 # load dataset
 data_subset <- read.csv("../data/data_subset.csv")
@@ -122,7 +121,7 @@ for (i in unique(data_subset$ID)){
                         start = list(r_max = r_max_start, N_0 = N_0_start, 
                         N_max = N_max_start,
                         t_lag = t_lag_start),
-                        control = nls.lm.control(maxiter = 100)),
+                        control = nls.lm.control(maxiter = 200)),
                         silent = TRUE)
 
     # baranyi model
@@ -133,7 +132,7 @@ for (i in unique(data_subset$ID)){
                         N_max = N_max_start,
                         r_max = r_max_start,
                         t_lag = t_lag_start),
-                        control = nls.lm.control(maxiter = 100)),
+                        control = nls.lm.control(maxiter = 200)),
                         silent = TRUE)
 
     # Model Comparison
