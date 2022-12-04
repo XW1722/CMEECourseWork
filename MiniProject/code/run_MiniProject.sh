@@ -10,5 +10,4 @@ Rscript miniproject.R
 
 # generates the report pdf
 bash compilation.sh
-
 echo "Process completed!"

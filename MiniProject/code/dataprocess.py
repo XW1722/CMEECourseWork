@@ -19,4 +19,4 @@ data_subset.insert(0, "ID", data_subset.Species + "_" + data_subset.Temp.map(str
 data_subset.fact_ID = pd.factorize(data_subset.ID)
 
 # save the data
-data_subset.to_csv("../data/data_subset.csv")
+data_subset.to_csv("../results/data_subset.csv")

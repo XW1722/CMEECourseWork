@@ -11,7 +11,7 @@ require("stats")
 require("minpack.lm")
 
 # load dataset
-data_subset <- read.csv("../data/data_subset.csv")
+data_subset <- read.csv("../results/data_subset.csv")
 
 # data preparation
 t <- as.numeric(data_subset$Time)

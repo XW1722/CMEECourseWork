@@ -16,15 +16,15 @@
 %SetFonts
 
 
-\title{MiniProject - Comparison between different models applied on biological population growth}
+\title{Relative success of the modified Gompertz model in microbial population estimation}
 
 
 \author{Xuan Wang (xuan.wang22@imperial.ac.uk)}
 
 
-\date{2 Dec, 2022}					
+\date{4 Dec, 2022}					
 
-\footnotetext[1]{Word Count:}
+\footnotetext[1]{Word Count: 3298}
 
 \linespread{1.5}
 
@@ -34,16 +34,16 @@
 	\newpage
 
 	\begin{abstract}
-% background/objectives/methods/main results/main conclusions/take-home messages
-	Due to the availability of 
+	With the significant impact on food safety, increasing attention has been paid to microbial population growth. However, it has been a controversial topic about which model to use for evaluation. In our study, a comparison of the effectiveness of different models is conducted to select the model of the best fit across species, including both phenomenological and mechanistic models. As pure mathematical models, the quadratic and cubic polynomial models are evaluated; and are compared to the models based on biological theories, including the Logistic model, the modified Gompertz model and the Baranyi model. The Akaike information criterion and the Bayesian information criterion are employed for the model selection. According to our results, it is indicated that the modified Gompertz model has the best performance in such estimation across different species. We conclude that the mechanistic models generally have better performance, with the parameters chosen to be an important factor in the effectiveness of the model.
+
 	\end{abstract}
 	\pagebreak
 
 	\section{Introduction}
 
-	For decades, great attention has been paid to microbial population growth, and many studies have been conducted in this area. The impact of bacterial population growth rate on the safety of food products is one of the major reasons attracting researchers to study in this field, such that effective intervention could be given to the production process with valuable and accurate prediction \cite{Nauta}. With the increasing interest in microbial growth, the suitability of models has become a popular topic due to their importance in bringing considerable savings caused by the challenge in laboratory testing \cite{perni2005estimating}. 
+	For decades, great attention has been paid to microbial population growth, and many studies have been conducted in this area. The impact of bacterial population growth rate on the safety of food products is one of the major reasons attracting researchers to study in this field, such that effective intervention could be given to the production process with valuable and accurate prediction [\cite{nauta2002modelling}]. With the increasing interest in microbial growth, the suitability of models has become a popular topic due to their importance in bringing considerable savings caused by the challenge in laboratory testing [\cite{perni2005estimating}]. 
 	\bigbreak
-	\noindent In general, bacterial growth contains several stages: the lag phase, exponential phase, stationary phase, and death phase \cite{doi:10.1080/10408398.2011.570463}. Several models have been developed for the evaluation, including phenomenological models - developed based on experimentally observed patterns instead of any basic principles; and another type called the mechanistic microbial growth model - which takes the theories into consideration \cite{doi:10.1080/10408398.2011.570463}. The objective of our study is to investigate the overall performance of different models applying to the microbial growth rate data across species. To achieve this, the quadratic and cubic linear polynomial models are selected as representative models for the phenomenological models. A comparison with the linear models will be given to the Logistic model, the modified Gompertz model, and the Baranyi model, which are regarded as mechanistic models. In addition to the non-linear models, the linear polynomial models will also be included in our study for comparison. The non-linear Least Squares approach is used for our study due to the more negligible bias for the non-linear models. 
+	\noindent In general, bacterial growth contains several stages: the lag phase, exponential phase, stationary phase, and death phase [\cite{peleg2011microbial}]. Several models have been developed for the evaluation, including phenomenological models - developed based on experimentally observed patterns instead of any basic principles; and another type called the mechanistic microbial growth model - which takes the theories into consideration [\cite{peleg2011microbial}]. The objective of our study is to investigate the overall performance of different models applying to the microbial growth rate data across species. To achieve this, the quadratic and cubic linear polynomial models are selected as representative models for the phenomenological models. A comparison with the linear models will be given to the Logistic model, the modified Gompertz model [\cite{zwietering1991modeling}], and the Baranyi model, which are regarded as mechanistic models. In addition to the non-linear models, the linear polynomial models will also be included in our study for comparison. The non-linear Least Squares approach is used for our study due to the more negligible bias for the non-linear models. 
 	\bigbreak
 	\noindent This report will be divided into several parts:
 	\begin{itemize}
@@ -62,7 +62,7 @@
 	\section{Methods}
 
 
-	For a comprehensive comparison, this report uses a combination of the Ordinary Linear and Non-Linear Least Squares (NLLS) approaches, which are applied to the linear and non-linear models, respectively. Each model is fitted to the given dataset separately, and the models are compared by superimposing the plots in one graph. For the model selection, both the Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC) are calculated. It is also worth mentioning that, though the \(R^2\) has been a popular method for evaluating model fitness, it will not be used for this study. The reason is that the calculation of \(R^2\) value could provide high bias when estimating non-linear models \cite{spiess2010evaluation}, while AIC and BIC have a better performance in this situation. Therefore, AIC and BIC are performed in our study for the selection of models instead.
+	For a comprehensive comparison, this report uses a combination of the Ordinary Linear and Non-Linear Least Squares (NLLS) approaches, which are applied to the linear and non-linear models, respectively. Each model is fitted to the given dataset separately, and the models are compared by superimposing the plots in one graph. For the model selection, both the Akaike Information Criterion (AIC) and Bayesian Information Criterion (BIC) are calculated. It is also worth mentioning that, though the \(R^2\) has been a popular method for evaluating model fitness, it will not be used for this study. The reason is that the calculation of \(R^2\) value could provide high bias when estimating non-linear models [\cite{spiess2010evaluation}], while AIC and BIC have a better performance in this situation. Therefore, AIC and BIC are performed in our study for the selection of models instead.
 
  		\subsection{Data}
  
@@ -70,7 +70,7 @@
 
  		\subsection{Models}
  
- 		To start with, the linear models are performed.  As the most commonly seen models for bacterial growth, the Logistic model and the Gompertz models are conducted for comparison. In addition, as a mechanistic model, the Baranyi model is also shown in this study.
+ 		To start with, the linear models are performed as phenomenological models.  The Logistic model and the modified Gompertz models are then conducted as the mechanistic models. As a well-known model with the ability to show a good fit for various bacterial growth curves [\cite{yilmaz2011identifiability}], the Baranyi model is also used for comparison.
 		
 			\subsubsection{The Linear models}
 			
@@ -81,7 +81,7 @@
 			
  			\subsubsection{The Logistic model}
 			
-			As a more widely-fitting choice, the non-linear models are generally more robust than linear models for prediction \cite{Archontolis}. Among these models, the Logistic model has been a classical choice for prediction in biological population. This model can be expressed as follows:
+			As a more widely-fitting choice, the non-linear models are generally more robust than linear models for predicting non-linear relationships [\cite{archontoulis2015nonlinear}]. Among these models, the Logistic model has been a classical choice for predicting biological populations. This model can be expressed as follows:
 			
 			\[N_t = \frac{N_0 N_{max} e^{rt}}{N_{max} + N_0(e_{rt} - 1)}\]
 			
@@ -90,7 +90,7 @@
 			
 			\subsubsection{The modified Gompertz model}
 			
-			Though the simplicity of the Logistic model has been an advantage, the formula does not contain the time lag before the start of exponential growth in bacterial population growth. In reality, the existence of lag phase is common in biology, which allows the bacterial cells to adapt to the new environment \cite{rolfe2012lag}. This shortage of Logistic model could be solved by the modified Gompertz model \cite{zwietering1991modeling}(Zwitering et al., 1990), which has the following formula:
+			Though the simplicity of the Logistic model has been an advantage, the formula does not contain the time lag before the start of exponential growth in bacterial population growth. In reality, the existence of a lag phase is common in biology, which allows the bacterial cells to adapt to the new environment [\cite{rolfe2012lag}]. This shortage of the Logistic model could be solved by the modified Gompertz model [\cite{zwietering1991modeling}], which has the following formula:
 			
 			\[log(N_t) = N_0 + (N_{max} - N_0) e^{-e^{r_{max}exp(1)\frac{t_{lag}-t}{(N_{max}-N_0)log(10)} + 1}}\]
 			
@@ -99,7 +99,7 @@
 			
 			\subsubsection{The Baranyi model}
 			
-			In addition to the Gompertz model, the lag phase of population growth is also taken into consideration by the Baranyi model. The Baranyi model is also examined in our study with the explicit expression \cite{BARANYI1994277}:
+			In addition to the Gompertz model, the lag phase of population growth is also taken into consideration by the Baranyi model. The Baranyi model is also examined in our study with the explicit expression [\cite{baranyi1994dynamic}]:
 			\[N_t = N_0 + r_{max} A(t) - \frac{1}{m}ln(1 + \frac{e^{mr_{max}A(t)} - 1}{e^{m(N_{max} - N_0)}})\]
 			where
 			\[A(t) = t + \frac{1}{r_{max}}ln(e^{-vt} + e^{-h_0} - e^{-vt - h_0}) \]
@@ -108,13 +108,13 @@
 			\item \(r_{max}\) is the maximum growth rate;
 			\item \(m\) is a curvature parameter to characterise the transition from the exponential phase;
 			\item \(v\) is a curvature parameter to characterise the transition to the exponential phase;
-			\item \(h_0\) is a dimensionless parameter that quantifies the cells' initial physiological state. \cite{GRIJSPEERDT1999593}
+			\item \(h_0\) is a dimensionless parameter that quantifies the cells' initial physiological state. [\cite{grijspeerdt1999estimating}]
 			\end{itemize}
-			\noindent According to Baranyi (1997), it is suggested that \(v = r_{max}\) and \(m = 1\), which will also be adopted for our study \cite{GRIJSPEERDT1999593}. It is also mentioned that the parameter \(h_0\) could be derived by the production of \(r_{max}\) and \(t_{lag}\)\cite{BARANYI1994277}. 
+			\noindent According to Baranyi (1997), it is suggested that \(v = r_{max}\) and \(m = 1\), which will also be adopted for our study [\cite{grijspeerdt1999estimating}]. It is also mentioned that the parameter \(h_0\) could be derived by the production of \(r_{max}\) and \(t_{lag}\) [\cite{baranyi1994dynamic}]. 
 			
  		\subsection{Model fitting}
 		
-		The computation of linear modelling can be achieved in R directly by using the \(lm()\) function, which could realise both quadratic and cubic modelling. As mentioned, the data used in the model fitting of both linear models are the raw data instead of log-transformed data. For the non-linear models, the logarithm form of the population data is used for the fittings. The starting values are defined with the same equation within a loop for each subset, which takes the value of \(N_0\) as the minimum value of population in each subset while \(N_{max}\) takes the maximum value; for the maximum growth rate, the value of \(r_max\) is obtained by taking the maximum slope value between every two points of the data; the location of the maximum growth rate is used to derive the start value of the duration of the lag phase by subtracting the time duration of the exponential growth phase from the overall time. For the model selection criterion, we have used both AIC and BIC, while the formula of AIC differs when the sample size is small to ensure that the comparison result is reliable. The expressions of the selection criterion are as follows:
+		The computation of linear modelling can be achieved in R directly by using the \(lm()\) function, which could achieve both quadratic and cubic modelling. As mentioned, the data used in the model fitting of both linear models are the raw data instead of log-transformed data. For the non-linear models, the logarithm form of the population data is used for the fittings. The starting values are defined with the same equation within a loop for each subset, which takes the value of \(N_0\) as the minimum value of population in each subset while \(N_{max}\) takes the maximum value; for the maximum growth rate, the value of \(r_max\) is obtained by taking the maximum slope value between every two points of the data; the location of the maximum growth rate is used to derive the start value of the duration of the lag phase by subtracting the time duration of the exponential growth phase from the overall time. For the model selection criterion, we have used both AIC and BIC, while the formula of AIC differs when the sample size is small to ensure that the comparison result is reliable. The expressions of the selection criterion are as follows:
 		
 		\[AIC = n + 2 + nlog(\frac{2\pi}{n}) + nlog(RSS) + 2p\]
 		\[BIC = n + 2 + nlog(\frac{2\pi}{n}) + nlog(RSS) + plog(n)\]
@@ -198,7 +198,7 @@
 		\caption{Pattern with different sample deviation}
 		\end{figure}
 		
-		\noindent The figure above displays the comparison of the model fittings in samples with different standard deviations. The samples show a more significant divergence in the first image, especially at the starting period. It can be observed that the line for the Baranyi model is not present in the first graph, which indicates that the model cannot fit this subset with a more significant standard deviation. By contrast, the other chosen models fit the subsets well without any obvious difference in the figure. However, it is also worth mentioning that the linear models have a better performance in the second image with a minor standard deviation, even though the difference is relatively small.
+		\noindent The figure above displays the comparison of the model fittings in samples with different standard deviations. The samples show a more significant divergence in the first image, especially at the starting period. It can be observed that the line for the Baranyi model is not present in the first graph, which indicates that the model cannot fit this subset with a more significant standard deviation. By contrast, the other chosen models fit the subsets well without any obvious difference in the figure. However, it is also worth mentioning that the linear models have a better performance in the second image with a minor standard deviation, even though the difference from the other models is relatively small.
 		
 		\begin{figure}[H]
 			\begin{center}
@@ -214,7 +214,7 @@
 		\caption{Pattern with significant lag phase}
 		\end{figure}
 		
-		\noindent As displayed in figure 4, we can notice that the most significant advantage of non-linear models is the sensitivity of lag phases compared to linear models. The Baranyi and Gompertz models show a similar fit in the first image, while the linear and Logistic models fail to fit the lag phase. The second graph shows a slight difference, where the Baranyi model shows worse evaluation than the Logistic model. The modified Gompertz model estimates the lag phase best from our results.
+		\noindent As displayed in figure 4, we notice that the most significant advantage of non-linear models is the sensitivity of lag phases compared to linear models. The Baranyi and Gompertz models show a similar fit in the first image, while the linear and Logistic models fail to detect the lag phase. A slight difference is shown in the second image, where the Baranyi model displays a worse evaluation than the Logistic model. The modified Gompertz model estimates the lag phase best from our results.
 
 		\begin{figure}[H]
 			\begin{center}
@@ -230,7 +230,7 @@
 		\caption{Pattern with different sample size}
 		\end{figure}
 		
-		\noindent Figure 5 compares the model fittings for samples with different sizes. It is noticeable that the larger sample size would lead to a better estimate of the Gompertz and the Logistic model, while the Baranyi model again fails to fit the sample with a large sample size. In addition, the linear models have a comparatively more deviated estimation in the second image. Errors can be observed from the linear models in the second graph in the growth phase.
+		\noindent Figure 5 compares the model fittings for samples with different sizes. It is observable that the larger sample size would lead to a better estimate of the Gompertz and the Logistic model, while the Baranyi model again fails to fit the larger sample. In addition, the linear models have a comparatively greater deviation in the second image. Errors can be observed from the linear models in the second graph in the growth phase.
 		
 		\begin{figure}[H]
 			\begin{center}
@@ -246,41 +246,39 @@
 		\caption{AIC and BIC comparison}
 		\end{figure}
 		
-		\noindent Now we proceed to the numerical comparison using the AIC and BIC calculation. It can be seen that both criteria have shown similar results, with the Gompertz model having the highest frequency of minimum AIC/BIC value among all the chosen models. Meanwhile, though the linear models are also included,  there is zero frequency of linear models having the lowest value. Therefore, we can conclude that the non-linear models fit data better than linear models in general, with the Gompertz model providing the best estimation.
+		\noindent Now we proceed to the numerical comparison using the AIC and BIC calculation. It can be seen that both criteria have shown similar results, with the Gompertz model having the highest frequency of minimum AIC/BIC value among all the chosen models. Meanwhile, though the linear models are also included,  there is zero frequency of linear models having the lowest value. Therefore, we deduce that the non-linear models fit data better than linear models in general, with the Gompertz model providing the best estimation.
 
 	\pagebreak
 	\section{Discussion}
 	
 	\subsection{Findings and implications}
 	
-	As indicated by the results above, the performance of Quadratic and Cubic linear models usually cannot predict the whole trend in general. Although the linear models perform better in predicting the death phase, their overall AIC and BIC are higher than others. This could be because bacterial growth could usually be affected by various factors which may not be captured in the pure mathematical functions \cite{sutherland2002behavioural}. For example, both linear models miss the lag phase before the start of population growth. This is because the phenomenological models usually do not consider the lag time. Nevertheless, the existence of the lag phase is proven in reality \cite{rolfe2012lag}, causing inaccuracy of linear models. By contrast, this is usually taken into account by the mechanistic models, which are based on biological theory, hence providing better performance on predicting the lag phase. Though the fitting of the Baranyi model for the lag phase shows a slight deviation in the second plot of figure 4, it could be due to several reasons:
+	As indicated by the results above, the performance of Quadratic and Cubic linear models usually cannot predict the whole trend in general. Although the linear models perform better in predicting the death phase, their overall AIC and BIC are higher than others. This could be because bacterial growth could usually be affected by various factors which may not be captured in the pure mathematical functions [\cite{sutherland2002behavioural}]. For example, both linear models miss the lag phase before the start of population growth. This is because the phenomenological models usually do not consider the lag time. Nevertheless, the existence of the lag phase is proven in reality [\cite{rolfe2012lag}], causing inaccuracy of linear models. By contrast, this is usually taken into account by the mechanistic models, which are based on biological theory, hence providing better performance on predicting the lag phase. Though the fitting of the Baranyi model for the lag phase shows a slight deviation in the second plot of figure 4, it could be due to several reasons:
 	\begin{itemize}
-	\item The current studies on the lag phase are still not sufficient enough \cite{rolfe2012lag}. Due to the lack of data on the underlying biological behaviour and physiological processes, current studies on the lag phase is still poor. This could be a potential reason for the shortage of theoretical-based models when predicting the duration before the start of exponential growth.
-	\item Another possible reason is the limited sample data for the lag phase. According to Schmidt, the actual lag time has to be determined from the laboratory data instead of the model \cite{Ylmaz2011IdentifiabilityOB}. Nevertheless, there are only a few points at the lag phase in our dataset, which could be a possible reason for an inaccurate estimate of the model.
+	\item The current studies on the lag phase are still not sufficient enough [\cite{rolfe2012lag}]. Due to the lack of data on the underlying biological behaviour and physiological processes, current studies on the lag phase is still poor. This could be a potential reason for the shortage of theoretical-based models when predicting the duration before the start of exponential growth.
+	\item Another possible reason is the limited sample data for the lag phase. According to Schmidt, the actual lag time has to be determined from the laboratory data [\cite{yilmaz2011identifiability}]. Nevertheless, there are only a few points at the lag phase in our dataset, which could be a possible reason for an inaccurate estimate of the model.
 	\end{itemize}
 	\noindent For the estimate of the stationary phase, the performance of models is relatively close. In general, most models provide a reasonable pattern for the stationary duration, while some error is displayed in the Baranyi model. There are fluctuations shown in the Baranyi model even when the abundance becomes stable. In this situation, the linear models perform better, while the Gompertz and Logistic models can also provide an accurate estimation. It is hard to distinguish which model has the best estimate at the stationary stage.
 	\bigbreak
-	\noindent It is worth mentioning that one advantage of the phenomenological models is their better ability to predict the death phase compared to the Gompertz and Logistic models. Although the Baranyi model also considers the estimation of the death phase, the overall fitness is not satisfying. The Gompertz and Logistic model reaches the maximum and stays almost constant without extending beyond the stationary phase \cite{whiting1992quantitative}. This may be due to the empirical nature of these model equations, where the death phase is not taken into account \cite{chowdhury2007validity}. By comparison, both quadratic and cubic equations can provide an accurate estimate for the decline of abundance after stationarity, according to our results. The original nature of the mathematical equations could be an explanation, which contains both an increase and reduction in a period. We can conclude that the equations based on pure mathematical theories can sometimes also be helpful, despite the specific situation which may not be suitable for every case. Though the mechanistic models generally provide a better estimate, the fitness depends on the different parameters taken into account. 
+	\noindent It is worth mentioning that one advantage of the phenomenological models is their better ability to predict the death phase compared to the Gompertz and Logistic models. Although the Baranyi model also considers the estimation of the death phase, the overall fitness is not satisfying. The Gompertz and Logistic model reaches the maximum and stays almost constant without extending beyond the stationary phase [\cite{whiting1992quantitative}]. This may be due to the empirical nature of these model equations, where the death phase is not taken into account [\cite{chowdhury2007validity}]. By comparison, both quadratic and cubic equations can provide an accurate estimate for the decline of abundance after stationarity, according to our results. The original nature of the mathematical equations could be an explanation, which contains both an increase and reduction in a period. We can conclude that the equations based on pure mathematical theories can sometimes also be helpful, despite the specific situation which may not be suitable for every case. Though the mechanistic models generally provide a better estimate, the fitness depends on the different parameters considered. 
 	\bigbreak
-	\noindent In addition, it is noticeable that the sample size and the standard deviation are also factors that could influence the performance of models. We observe that the Baranyi model was not included in the graph for the larger sample size and standard deviation in both Figure 3 and Figure 5. This is due to the model's poor fit in the corresponding subset. It can be concluded that the range of datasets that the Baranyi model can fit is comparatively smaller than the other models. All the other chosen models have a reasonable fit for the data with different standard deviations. In contrast, the linear models show an inaccuracy for the estimation of the dataset with a greater sample size. 
+	\noindent In addition, it is noticeable that the sample size and the standard deviation are also factors that could influence the performance of models. We observe that the Baranyi model was not included in the graph for the larger sample size and standard deviation in both Figure 3 and Figure 5. This is due to the model's poor fit in the corresponding subset. It can be concluded that the range of datasets that the Baranyi model can fit is comparatively smaller than the other models. All the other chosen models have a reasonable fit for the data with different standard deviations. In contrast, the linear models show an inaccuracy in estimating the larger sample size dataset. 
 	\bigbreak
-	\noindent In general, we can conclude that the overall performance of the modified Gompertz model has the best estimation for our dataset. Mechanistic models based on biological theories can usually provide a better estimate than phenomenological ones, with the parameters counted being a critical factor of the effectiveness and comprehensiveness of the mechanistic model. 
+	\noindent In general, we can deduce that the overall performance of the modified Gompertz model has the best estimation across species for our dataset. Mechanistic models based on biological theories can usually provide a better estimate than phenomenological ones, with the parameters counted being a critical factor of the effectiveness and comprehensiveness of the mechanistic model. 
 	
 	\subsection{Shortcomings}
 	
-	Though several models have been conducted for our study, it is not comprehensive enough, and further work still needs to be done to cover the gap. There are several shortcomings of this study:
+	Though several models have been conducted for our study, there are several shortcomings to be overcome by further studies:
+	
 	\begin{itemize}
 	\item Changes in the environment not taken into account
 	\bigbreak
-	\noindent Though it is possible to predict the population growth rate, the environment is still likely to alter, which could bring unexpected change in population \cite{sutherland2002behavioural}. For example, several factors could potentially influence bacterial growth, including temperature, pH value, etc. \cite{gale1943factors} However, the change of environment could cause uncertainties during the data collection process, which might not be included in the data. This would be a potential cause for the deviation of the modelling, and could lead to different results in the model performances.
+	\noindent Though it is possible to predict the population growth rate, the environment is still likely to alter, which could bring unexpected change in population [\cite{sutherland2002behavioural}]. For example, several factors could potentially influence bacterial growth, including temperature, pH value, etc. [\cite{gale1943factors}] However, the change of environment could cause uncertainties during the data collection process, which might not be included in the data. This would be a potential cause for the deviation of the modelling, and could lead to different results in the model performances.
 	\item Possible inaccuracy by the data processing
 	\bigbreak 
 	\noindent In this study, the raw data of the cell population and time are transformed to their absolute value for further calculation to ensure that the data is realistic. However, it is possible to misunderstand the data with negative values at their initial state.
-	\bigbreak
-	\item Difference in the definition of parameters
-	\noindent According to the study of \cite{perni2005estimating}, the definition of the parameters are usually determinant to the suitability of the models. In our study, the models are all compared with the same starting point to ensure that they all have the same standard. However, some parameters could slightly differ from other models, which is not considered in our study. This could also be a potential cause for inaccuracy, and further studies need to be conducted.
 	\end{itemize}
-	
+	\pagebreak
 	\section{Conclusion}
 	
 	In this study, we have applied the Baranyi model, the modified Gompertz model and the Logistic model with comparison to the Quadratic and the Cubic linear model to find the model of the best estimate for the functional response data across different species. The results have suggested that the modified Gompertz model has the best performance in general, even though the death phase estimation is not considered. Despite the observation that the phenomenological models could be effective when providing prediction after exponential growth due to mathematical properties, the models based on population growth theories are more suitable for the overall estimates, where the parameters taken into account should be a primary factor influencing the effectiveness of the models.
