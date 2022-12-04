@@ -1,3 +1,7 @@
+"""
+This script is used for the data processing of the project.
+"""
+
 __author__ = "Xuan Wang (xuan.wang22@imperial.ac.uk)"
 __date__ = "27 Nov 2022"
 

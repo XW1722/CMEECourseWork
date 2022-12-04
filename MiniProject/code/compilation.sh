@@ -10,4 +10,5 @@ rm *.bbl
 rm *.blg
 rm *.log
 
+# setting the path
 mv *.pdf ../results/
