@@ -1,5 +1,6 @@
 """
 This script is used for the data processing of the project.
+The original data is processed and the data for use is save in the results directory.
 """
 
 __author__ = "Xuan Wang (xuan.wang22@imperial.ac.uk)"

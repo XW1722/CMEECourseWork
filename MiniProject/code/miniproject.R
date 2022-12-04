@@ -1,3 +1,9 @@
+# CMEE Miniproject - R script
+# Author: Xuan Wang (xuan.wang22@imperial.ac.uk)
+# Date: 4 Dec 2022
+# Description: This script includes the model fitting and plotting. The dataset generated from dataprocess.py is used.
+
+
 ###################################################################
 # Prerequisite 
 ###################################################################
@@ -36,7 +42,7 @@ logistic_model <- function(t, r_max, N_max, N_0){
     return(N_0 * N_max * exp(r_max * t)/(N_max + N_0 * (exp(r_max * t) - 1)))
 }
 
-# Gompertz model
+# modified Gompertz model
 gompertz_model <- function(t, r_max, N_max, N_0, t_lag){
     return(N_0 + (N_max - N_0) * exp(-exp(r_max * exp(1) * (t_lag - t)/((N_max - N_0) * log(10)) + 1)))
 }
@@ -143,6 +149,7 @@ for (i in unique(data_subset$ID)){
         residuals_qua[is.nan(residuals_qua)] <- 0
         RSS_quadratic <- sum(log(residuals_qua))
         AIC_quadratic <- AIC_func(n_row, RSS_quadratic, p_quadratic)
+        # check if the sample size is small
         if(length(quadratic_model) < 10){
             AIC_quadratic <- AIC_small(AIC_quadratic, n_row, RSS_quadratic)
         }
@@ -222,7 +229,7 @@ for (i in unique(data_subset$ID)){
         BIC_buchanan <- "NA"
     }    
 
-    # create dataframe
+    # create dataframe for models
     df1 <- data.frame(t, log(quadratic_predict))
     df1$model <- "Quadratic"
     names(df1) <- c("Time", "pop", "model")
@@ -329,32 +336,3 @@ graphics.off()
 pdf("../results/BIC_plot.pdf")
 print(BIC_plot)
 graphics.off()
-
-##################################
-###### Comparing the models ######
-##################################
-
-#model_frame <- rbind(df1, df2, df3, df4, df5, df6)
-
-# generation of the graph
-#p <- ggplot(data_subset, aes(x = t, y = log_pop)) +
-#    geom_point(size = 3) +
-#    geom_line(data = model_frame, aes(x = Time, y = LogN, col = model),
-#        linewidth = 1) +
-#    theme(aspect.ratio = 1) +
-#    labs(x = "Time", y = "Cell number")
-
-# AIC and BIC values of the fitted models
-#AIC <- data.frame("AIC", AIC(quadratic_model), AIC(cubic_model),
-#    AIC(fit_buchanan), AIC(fit_baranyi), AIC(fit_logistic), AIC(fit_gompertz))
-#BIC <- data.frame("BIC", BIC(quadratic_model), BIC(cubic_model),
-#    BIC(fit_buchanan), BIC(fit_baranyi), BIC(fit_logistic), BIC(fit_gompertz))
-#names(AIC) <- c("Criteria", "Quadratic", "Cubic", "Buchanan",
-#    "Baranyi", "Logistic", "Gompertz")
-#names(BIC) <- c("Criteria", "Quadratic", "Cubic", "Buchanan", 
-#    "Baranyi", "Logistic", "Gompertz")
-#comparison <- rbind(AIC, BIC)
-#write.csv(comparison, "../results/model_comparison.csv",
-#    row.names = TRUE)
-
-##
