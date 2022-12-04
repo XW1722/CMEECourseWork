@@ -18,3 +18,4 @@ rm *.blg
 rm *.log
 echo "PDF generated"
 
+
