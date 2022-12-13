@@ -581,17 +581,90 @@ question_33 <- function(){
 
 # Question 36
 question_36 <- function(){
-  
-  png(filename="question_36", width = 600, height = 400)
-  # plot your graph here
+  # first initial condition
+  count_1 <- 0
+  for (i in 1:250){
+    # read in the output files
+    load(paste("demographic_cluster_", i, ".rda", sep = ""))
+    # work out how many extinctions occurred for this initial condition
+    if (tail(pop_size, 1) == 0){
+      count_1 <- count_1 + 1
+    }
+  }
+  # compute the proportion of simulations resulting in extinction
+  extinct_1 <- count_1 / 250
+
+  # similar procedure applied to the results by other initial conditions
+  count_2 <- 0
+  for (i in 251:500){
+    load(paste("demographic_cluster_", i, ".rda", sep = ""))
+    if (tail(pop_size, 1) == 0){
+      count_2 <- count_2 + 1
+    }
+  }
+  extinct_2 <- count_2 / 250
+
+  count_3 <- 0
+  for (i in 501:750){
+    load(paste("demographic_cluster_", i, ".rda", sep = ""))
+    if (tail(pop_size, 1) == 0){
+      count_3 <- count_3 + 1
+    }
+  }
+  extinct_3 <- count_3 / 250
+
+  count_4 <- 0
+  for (i in 751:1000){
+    load(paste("demographic_cluster_", i, ".rda", sep = ""))
+    if (tail(pop_size, 1) == 0){
+      count_4 <- count_4 + 1
+    }
+  }
+  extinct_4 <- count_4 / 250
+
+  extinctions <- c(extinct_1, extinct_2, extinct_3, extinct_4)
+  names(extinctions) <- c("large_adults", "small_adults",
+                          "large_spread", "small_spread")
+
+  png(filename="question_36.png", width = 600, height = 400)
+  barplot(extinctions, xlab = "initial conditions", ylab = "extinction rate",
+              main = "Extinction proportion with different initial conditions")
   Sys.sleep(0.1)
   dev.off()
   
-  return("type your written answer here")
+  return("A population with a small and spread population is the most likely
+  to go extinct. This is because a larger population can lead to greater number
+  of adults in general, which means that there is a greater chance for 
+  recruitment. Smaller initial population means that there is less adults,
+  and hence less recruitment. Similarly, when the species have spread 
+  population, there is less adults, leading to smaller possibility of recruit-
+  ment. By contrast, species with greater number of adults are generally less
+  likely to go extinct.")
 }
 
 # Question 37
 question_37 <- function(){
+  # set up the initial conditions
+  clutch_distribution <- c(0.06, 0.08, 0.13, 0.15, 0.16, 0.18, 0.15, 0.06, 0.03)
+  projection_matrix <- matrix(c(0.1, 0.6, 0.0, 0.0,
+                                0.0, 0.4, 0.4, 0.0,
+                                0.0, 0.0, 0.7, 0.25,
+                                2.6, 0.0, 0.0, 0.4), nrow = 4, ncol = 4)
+  simulation_length <- 120
+  init_large <- state_initialise_spread(num_stages = 4, initial_size = 100)
+  init_small <- state_initialise_spread(num_stages = 4, initial_size = 10)
+
+  # identify the population size for each initial condition
+  large_demographic <- deterministic_simulation(init_large,
+                            projection_matrix, simulation_length)
+  small_demographic <- deterministic_simulation(init_small,
+                            projection_matrix, simulation_length)
+  large_stochastic <- stochastic_simulation(init_large,
+                            clutch_distribution, projection_matrix,
+                            simulation_length)
+  small_stochastic <- stochastic_simulation(init_small,
+                            clutch_distribution, projection_matrix,
+                            simulation_length)
   
   png(filename="question_37_small", width = 600, height = 400)
   # plot your graph for the small initial population size here
