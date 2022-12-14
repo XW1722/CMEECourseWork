@@ -1,3 +1,10 @@
+"""
+This script uses the timeit module for quick profiling.
+"""
+
+__appname__ = "timeitme.py"
+__date__ = "Nov 2022"
+
 ##############################################################################
 # loops vs. list comprehensions: which is faster?
 ##############################################################################
@@ -20,8 +27,4 @@ from profileme import my_join as my_join_join
 
 from profileme2 import my_join as my_join
 
-%timeit my_squares_loops(iters)
-%timeit my_squares_lc(iters)
-%timeit (my_join_join(iters, mystring))
-%timeit (my_join(iters, mystring))
 

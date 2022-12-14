@@ -2,6 +2,7 @@
 This script applies the methods used in the lecture notes and extend
 it to generate a figure at the end.
 """
+
 __author__ = "Xuan Wang xuan.wang22@imperial.ac.uk"
 __date__ = "Dec 2022"
 __appname__ = "LV1.py"

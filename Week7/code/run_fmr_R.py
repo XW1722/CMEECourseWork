@@ -1,4 +1,11 @@
-"""This script runs an R script with the use of subprocess."""
+"""
+This script runs an R script with the use of subprocess in Python.
+The output and results are printed on screen.
+
+Author: Xuan Wang
+Date: Nov 2022
+Contact: xuan.wang22@imperial.ac.uk
+"""
 
 __author__ = 'Xuan Wang xuan.wang22@imperial.ac.uk'
 __version__ = '0.0.1'

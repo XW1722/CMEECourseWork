@@ -49,6 +49,7 @@ def main(r = 1.0, a = 0.2, z = 1.5, e = 1.5, K = 60):
     Once the main entrance is confirmed, this function will be operated.
     The plots will be generated and saved in the results directory.
     """
+    
     pops, infodict = integrate.odeint(dCR_dt, RC0, t, full_output=True)
     infodict['message']
 
@@ -91,6 +92,7 @@ def main(r = 1.0, a = 0.2, z = 1.5, e = 1.5, K = 60):
     print(f'The final population value for consumer density is {pops[-1,1]}')
 
 if __name__ == "__main__":
+    # checks if the program is run from main
     if len(sys.argv) == 6:
         # taking arguments from command line
         r = float(sys.argv[1])
