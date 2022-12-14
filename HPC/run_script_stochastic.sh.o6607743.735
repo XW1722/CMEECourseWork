@@ -1,0 +1,93 @@
+R about the stochastic model is about to run.
+
+R version 4.2.0 (2022-04-22) -- "Vigorous Calisthenics"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-conda-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> # CMEE 2022 HPC exercises R code pro forma
+> # For stochastic demographic model cluster run
+> 
+> # clear the workspace and turn off graphics
+> rm(list=ls())
+> graphics.off()
+> 
+> # load the functions needed by sourcing the main R code
+> source("/rds/general/user/xw1722/home/xw1722_HPC_2022_main.R")
+> 
+> # read in the job number from the cluster
+> iter <- as.numeric(Sys.getenv("PBS_ARRAY_INDEX"))
+> # local testing
+> # iter <- 251
+> 
+> # random number seeds
+> set.seed(iter)
+> 
+> # select the initial condition being used
+> clutch_distribution <- c(0.06, 0.08, 0.13, 0.15, 0.16, 0.18, 0.15, 0.06, 0.03)
+> projection_matrix <- matrix(c(0.1, 0.6, 0.0, 0.0,
++                             0.0, 0.4, 0.4, 0.0,
++                             0.0, 0.0, 0.7, 0.25,
++                             2.6, 0.0, 0.0, 0.4), nrow = 4, ncol = 4)
+> simulation_length <- 120
+> initial_list <- list(state_initialise_adult(4, 100),
++                     state_initialise_adult(4, 10),
++                     state_initialise_spread(4, 100),
++                     state_initialise_spread(4, 10))
+> # getting the initial population vector for each quarter of simulations
+> iter_sets <- list(1:250, 251:500, 501:750, 751:1000)
+> for (i in 1:4){
++     if (iter >= (min(as.numeric(iter_sets[[i]]))) &&
++     iter <= (max(as.numeric(iter_sets[[i]])))){
++         init_size <- initial_list[[i]]
++     }
++ }
+> 
+> # filename to store the results
+> results <- paste("demographic_cluster_", iter, ".rda", sep = "")
+> 
+> # simulation and results saving
+> stochastic_simulation(init_size,
++                     projection_matrix, 
++                     clutch_distribution, simulation_length)
+  [1]    100    127    120    114    125    123    110    115    118    156
+ [11]    157    176    180    191    196    232    232    286    292    304
+ [21]    311    319    315    358    381    428    463    489    506    508
+ [31]    573    596    641    645    672    667    826    892    980   1042
+ [41]   1077   1186   1230   1350   1346   1475   1518   1623   1634   1828
+ [51]   1859   1972   2157   2238   2419   2577   2785   2958   3208   3392
+ [61]   3700   3889   4158   4365   4712   4872   5194   5551   6040   6421
+ [71]   6947   7357   7760   8226   8805   9354   9799  10433  11099  11973
+ [81]  12722  13662  14537  15286  16493  17431  18499  19806  20834  22334
+ [91]  23550  25154  26628  28551  30727  32847  34906  37162  39680  42027
+[101]  44640  47664  50911  54464  58154  61451  65799  70513  74301  79159
+[111]  84710  89620  95828 101879 108785 115378 122624 130641 139347 148171
+[121] 157443
+> # save the results directly by the output of the function
+> save(pop_size, file = results)
+> 
+> 
+R (stochastic model) has finished running.
+
+============================================
+
+        Job resource usage summary 
+
+                 Memory (GB)    NCPUs
+ Requested  :         1             1
+ Used       :         0 (peak)   1.00 (ave)
+
+============================================

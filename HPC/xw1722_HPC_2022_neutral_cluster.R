@@ -6,12 +6,12 @@ rm(list=ls())
 graphics.off()
 
 # load the functions needed by sourcing the main R code
-source("xw1722_HPC_2022_main.R")
+source("/rds/general/user/xw1722/home/xw1722_HPC_2022_main.R")
 
 # read in the job number from the cluster
 iter <- as.numeric(Sys.getenv("PBS_ARRAY_INDEX"))
 # local testing
-# iter <- 1
+# iter <- 26
 
 # random number seeds
 set.seed(iter)

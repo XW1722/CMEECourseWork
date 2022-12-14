@@ -32,20 +32,32 @@ init_community_min <- function(size){
 
 # Question 4
 choose_two <- function(max_value){
-  return(sample.int(max_value, size = 2, replace = FALSE))
+  x <- seq(from = 1, to = max_value)
+  return(sample(x, size = 2, replace = FALSE))
 }
 
 # Question 5
 neutral_step <- function(community){
-  i <- choose_two(length(community))
-  community[i[1]] <- community[i[2]]
+  # randomly pick two individuals from the community vector
+  ran <- choose_two(length(community))
+  # replace
+  community[ran[1]] <- community[ran[2]]
   return(community)
 }
 
 # Question 6
 neutral_generation <- function(community){
-  for (each in 1:length(community)/2){
-    community <- neutral_step(community)
+  # check if the number of individuals is even
+  if (length(community) %% 2 == 0){
+    for (i in 1:(length(community) / 2)){
+      community <- neutral_step(community)
+    }
+  } else {
+    # randomly round up or down
+    n <- floor(length(community) / 2) + sample(0:1, size = 1)
+    for (i in 1:n){
+      community <- neutral_step(community)
+    }
   }
   return(community)
 }
@@ -53,42 +65,62 @@ neutral_generation <- function(community){
 # Question 7
 neutral_time_series <- function(community,duration){
   richness <- c()
-  richness[1] <- length(unique(community))
-  for (i in 2:duration){
-    community <- neutral_generation(community) # updating the current community for each loop
-    richness[[i]] <- length(unique(community))
+  richness[1] <- species_richness(community)
+  for (i in 2:(duration + 1)){
+    # current community state vector
+    community <- neutral_generation(community)
+    richness[i] <- species_richness(community)
   }
   return(richness)
 }
 
 # Question 8
 question_8 <- function() {
-  x <- seq(from = 1, to = 200)
-  richness <- neutral_time_series(community = init_community_max(100), duration = 200)
+  # initial conditions set up
+  community <- init_community_max(100)
+  duration <- 200
+  # compute the richness
+  richness <- neutral_time_series(community, duration)
+
   png(filename="question_8.png", width = 600, height = 400)
   # plot your graph here
-  plot(x, richness)
+  plot(richness, main = "Neutral model", 
+        xlab = "generations", ylab = "Species richness")
   Sys.sleep(0.1)
   dev.off()
-  return("The system will always converge to 1. This is because that when the number of a species increases while there is no speciation, it will increase the probability of reproduction of this species. Therefore, the system will end in having one single species.")
+  return("The system will always converge to 1. 
+  This is because that when the number of a species increases while there is 
+  no speciation, it will increase the probability of reproduction of this
+  species. Therefore, the system will end in having one single species.")
 }
 
 # Question 9
-neutral_step_speciation <- function(community,speciation_rate){
+neutral_step_speciation <- function(community, speciation_rate){
   i <- choose_two(length(community))
   rate <- runif(1, min = 0, max = 1)
   if (rate < speciation_rate){
+    # replace with speciation
     community[i[1]] <- max(community) + 1
   } else {
+    # replace without speciation
     community[i[1]] <- community[i[2]]
   }
   return(community)
 }
 
 # Question 10
-neutral_generation_speciation <- function(community,speciation_rate)  {
-  for (each in 1:length(community)/2){
-    community <- neutral_step_speciation(community, speciation_rate)
+neutral_generation_speciation <- function(community,speciation_rate = 0.3)  {
+  # check if the number of individuals is even
+  if (length(community) %% 2 == 0){
+    for (i in 1:(length(community) / 2)){
+      community <- neutral_step_speciation(community, speciation_rate)
+    }
+  } else {
+    # randomly round up or down
+    n <- floor(length(community) / 2) + sample(0:1, size = 1)
+    for (i in 1:n){
+      community <- neutral_step_speciation(community, speciation_rate)
+    }
   }
   return(community)
 }
@@ -96,29 +128,47 @@ neutral_generation_speciation <- function(community,speciation_rate)  {
 # Question 11
 neutral_time_series_speciation <- function(community,speciation_rate,duration)  {
   richness <- c()
-  richness[1] <- length(unique(community))
-  for (i in 2:duration){
+  # species richness of intial condition community
+  richness[1] <- species_richness(community)
+  for (i in 2:(duration + 1)){
     community <- neutral_generation_speciation(community, speciation_rate)
-    richness[i] <- length(unique(community))
+    richness[i] <- species_richness(community)
   }
   return(richness)
 }
 
 # Question 12
 question_12 <- function()  {
-  generation <- seq(from = 1, to = 200)
-  richness_max <- neutral_time_series_speciation(init_community_max(100), 0.1, 200) 
-  richness_min <- neutral_time_series_speciation(community = init_community_min(100), 
-    speciation_rate = 0.1, duration = 200)
+  # initialise
+  speciation_rate <- 0.1
+  community <- init_community_max(100)
+  duration <- 200
+  # simulations
+  richness_max <- neutral_time_series_speciation(community, speciation_rate, 
+                                                duration)
+  richness_min <- neutral_time_series_speciation(community, speciation_rate,
+                                                duration)
+
   png(filename="question_12.png", width = 600, height = 400)
-  plot(generation, richness_max, col = "blue", xlab = "Generation", ylab = "Neutral time series")
-  lines(generation, richness_min, col = "red")
-  legend('topright', legend = c('richness_max', 'richness_min'), fill = c("blue", "red"))
+  # plot your graph here
+  plot(richness_max, type = "l", col = "blue", 
+    main = "Neutral theory simulation with speciation",
+    xlab = "Generation", ylab = "Species richness")
+  lines(richness_min, col = "red")
+  legend("topright", legend = c("max_initial_condition", 
+    "min_initial_condition"), fill = c("blue", "red"))
   Sys.sleep(0.1)
   dev.off()
-  return("The initial condition of number of species does not have a great influence on the final convergence, given that the number of generation and the speciation rate is held constant. 
-    This is because the convergence of the species richness is mainly determined by the rate of extinction and the rate of speciation. Since the initial rate of speciation is the same, it means that when equilibrium is reached, the level of equilibrium would be similar.
-    Though the initial number of species is different, this is not a factor of the species richness.")
+
+  return("The initial condition of number of species does not have a great 
+  influence on the final convergence, given that the number of generation 
+  and the speciation rate is held constant. 
+  This is because the convergence of the species richness is mainly determined
+  by the rate of extinction and the rate of speciation. Since the initial rate
+  of speciation is the same, it means that when equilibrium is reached, the 
+  level of equilibrium would be similar.
+  Though the initial number of species is different, this is not a factor of the
+  species richness.")
 }
 
 # Question 13
@@ -158,14 +208,6 @@ question_16 <- function() {
   sum_min <- c()
 
   for (i in 1:2200){
-    richness_max <- neutral_time_series_speciation(
-      community = community_max,
-      speciation_rate = 0.1,
-      duration = 1) 
-    richness_min <- neutral_time_series_speciation(
-      community = community_min, 
-      speciation_rate = 0.1,
-      duration = 1)
     # updating the community for current generation
     community_max <- neutral_generation_speciation(
       community = community_max,
@@ -175,13 +217,14 @@ question_16 <- function() {
       community = community_min,
       speciation_rate = 0.1
     )
-    # record the species abundance octave vector
+    # record the species abundance octave vector after the burn-in period
     if (count == 200){
       octave_max <- octaves(species_abundance(community_max))
       octave_min <- octaves(species_abundance(community_min))
       sum_max <- sum_vect(sum_max, octave_max)
       sum_min <- sum_vect(sum_min, octave_min)
     } else if (count > 200 & count <= 2200) {
+      # record every 20 generations
       if ((count - 200) %% 20 == 0){
         octave_max <- octaves(species_abundance(community_max))
         octave_min <- octaves(species_abundance(community_min))
@@ -191,29 +234,36 @@ question_16 <- function() {
     }
     count <- count + 1
   }
+  # calculation of the mean
   mean_max <- sum_max / 101
   mean_min <- sum_min / 101
 
+  # naming the columns
+  names(mean_max) <- c("1", "2", "4", "8", "16", "32")
+  names(mean_min) <- c("1", "2", "4", "8", "16", "32")
+
   png(filename="question_16_min.png", width = 600, height = 400)
-  boxplot(mean_min, xlab = "Species abundance", ylab = "Mean abundance",
+  barplot(mean_min, xlab = "Number of individuals per species", 
+    ylab = "Number of species",
     main = "Mean species abundance with minimum initial condition")
   Sys.sleep(0.1)
   dev.off()
 
   png(filename="question_16_max.png", width = 600, height = 400)
-  boxplot(mean_max, xlab = "Species abundance", ylab = "Mean abundance",
+  barplot(mean_max, xlab = "Number of individuals per species",
+    ylab = "Number of species",
     main = "Mean species abundance with maximum initial condition")
   Sys.sleep(0.1)
   dev.off()
   
   return("The initial condition does not matter.
-  Though the two graphs are not completely the same, the difference is small.
+  Though slight difference exist between the two graphs, the general pattern
+  of the distribution is the same.
   The initial species richness is not a factor of the species abundance.
   No matter how large the initial species richness is, the species are equally
   likely to replicate or die.
   When the abundance is small, individuals are likely to replicate; when the 
-  abundance is great enough, individuals will be likely to die.
-  Equilibrium will be reached regardless of the number of initial species.")
+  abundance is great enough, individuals will be likely to die.")
 }
 
 # Question 17
@@ -229,17 +279,17 @@ neutral_cluster_run <- function(speciation_rate = 0.3, size, wall_time, interval
   time_series <- c(species_richness(community))
   abundance_list <- c(list(octaves(species_abundance(community))))
 
-  while (computing_time < wall_time){
+  while (computing_time <= wall_time){
     # current community
     community <- neutral_generation_speciation(community, 0.3) 
     
-    # storing the species richness and abundances
+    # storing the species richness and abundances during burn-in
     if ((count <= burn_in_generations) && (count %% interval_rich == 0)){
       # species richness
       time_series <- c(time_series, species_richness(community))
     }
+    # record species abundances every interval_oct generations
     if (count %% interval_oct == 0){
-      # species abundances
       abundance_list <- c(abundance_list, list(octaves(species_abundance(community))))
     }
     current_time <- as.numeric(proc.time()[3]) / 60
@@ -653,30 +703,62 @@ question_37 <- function(){
   simulation_length <- 120
   init_large <- state_initialise_spread(num_stages = 4, initial_size = 100)
   init_small <- state_initialise_spread(num_stages = 4, initial_size = 10)
+  population_stochastic_large <- 0
+  population_stochastic_small <- 0
 
-  # identify the population size for each initial condition
-  large_demographic <- deterministic_simulation(init_large,
-                            projection_matrix, simulation_length)
-  small_demographic <- deterministic_simulation(init_small,
-                            projection_matrix, simulation_length)
-  large_stochastic <- stochastic_simulation(init_large,
-                            clutch_distribution, projection_matrix,
-                            simulation_length)
-  small_stochastic <- stochastic_simulation(init_small,
-                            clutch_distribution, projection_matrix,
-                            simulation_length)
+  # stochastic model
+  # initial condition 3 - large spread population
+  for (i in (501:750)){
+    load(paste("demographic_cluster_", i, ".rda", sep = ""))
+    # identify the population size results and sum them up
+    population_stochastic_large <- population_stochastic_large + pop_size
+  }
+  # derive the mean population size at each step
+  mean_stochastic_large <- population_stochastic_large / 250
+
+  # initial condition 4 - small spread population
+  for (i in (751:1000)){
+    load(paste("demographic_cluster_", i, ".rda", sep = ""))
+    population_stochastic_small <- population_stochastic_small + pop_size
+  }
+  mean_stochastic_small <- population_stochastic_small / 250
+
+  # deterministic model
+  # initial condition 3 & 4
+  deterministic_large <- deterministic_simulation(init_large,
+                                    projection_matrix, simulation_length)
+  deterministic_small <- deterministic_simulation(init_small,
+                                    projection_matrix, simulation_length)
   
-  png(filename="question_37_small", width = 600, height = 400)
+  png(filename="question_37_small.png", width = 600, height = 400)
   # plot your graph for the small initial population size here
+  plot(mean_stochastic_small, type = "l", col = "#ff7b00",
+      main = "Comparison between models with small initial population size",
+      xlab = "Time step", ylab = "Population")
+  lines(deterministic_small, col = "#6327ef")
+  legend("topright", fill = c("#ff7b00", "#6327ef"), 
+      legend = c("stochastic model", "deterministic model"))
   Sys.sleep(0.1)
   dev.off()
   
-  png(filename="question_37_large", width = 600, height = 400)
+  png(filename="question_37_large.png", width = 600, height = 400)
   # plot your graph for the large initial population size here
+  plot(mean_stochastic_large, type = "l", col = "#ff7b00",
+      main = "Comparison between models with large initial population size",
+      xlab = "Time step", ylab = "Population")
+  lines(deterministic_large, col = "#6327ef")
+  legend("topright", fill = c("#ff7b00", "#6327ef"), 
+      legend = c("stochastic model", "deterministic model"))
   Sys.sleep(0.1)
   dev.off()
   
-  return("type your written answer here")
+  return("When the initial population size is large, it is appropriate to
+  use a deterministic model to approximate the behavior of an 'averaged'
+  stochastic system. The difference between the stochastic and deterministic
+  models are larger if the initial population size is small. When the initial 
+  popoulation size is small, the standard error could be greater which means 
+  that the average may deviate, leading to an inaccuracy in the deterministic
+  model.")
 }
 
 
