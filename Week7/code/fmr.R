@@ -1,5 +1,8 @@
 # Plots log(field metabolic rate) against log(body mass) for the Nagy et al 
 # 1999 dataset to a file fmr.pdf.
+# Author: Xuan Wang
+# Contact: xuan.wang22@imperial.ac.uk
+# Date: Nov 2022
 
 cat("Reading CSV\n")
 
