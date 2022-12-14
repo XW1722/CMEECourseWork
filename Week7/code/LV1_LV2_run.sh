@@ -16,8 +16,7 @@ echo "Process completed. The results are saved in the results directory."
 
 # profiling
 ipython3 -m cProfile LV1.py
-ipython3 -m cProfile LV2.py
-
+ipython3 -m cProfile LV2.py 1 0.2 1.5 1.5 60
 
 
 

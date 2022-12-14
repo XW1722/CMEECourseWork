@@ -10,13 +10,13 @@ import subprocess
 subprocess.Popen("Rscript --verbose fmr.R > ../results/fmr.Rout 2> ../results/fmr_errFile.Rout", shell=True).wait()
 p = subprocess.Popen(["Rscript", "fmr.R"], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 
-# printing the contens of the R console output
+# printing the contents of the R console output
 stdout, stderr = p.communicate()
 print(stdout.decode())
 
 # check whether the run is successful
 if stderr:
     """checks whether the run is successful"""
-    print("The process raised an error.")
+    print("The process raised an error: \n", stderr.decode())
 else:
     print("The run was successful.")
