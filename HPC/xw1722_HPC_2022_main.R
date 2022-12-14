@@ -311,88 +311,110 @@ neutral_cluster_run <- function(speciation_rate = 0.3, size, wall_time, interval
 
 # Question 20 
 process_neutral_cluster_results <- function() {
-  # initialisation
-  count <- 1
-  mean_a <- c()
-  mean_b <- c()
-  mean_c <- c()
-  mean_d <- c()
-  sum_1 <- 0
-  sum_2 <- 0
-  sum_3 <- 0
-  sum_4 <- 0
-  combined_results <- list()
+  # initialise
+  mean_octave_1 <- list()
+  mean_octave_2 <- list()
+  mean_octave_3 <- list()
+  mean_octave_4 <- list()
+  sum_size_1 <- vector()
+  sum_size_2 <- vector()
+  sum_size_3 <- vector()
+  sum_size_4 <- vector()
+  # for size 500
   for (i in 1:25){
-    # read the output files
-    load(paste("demographic_cluster_", i, ".rda", sep = ""))
+    # initialise
+    sum_octave_1 <- 0
+    # read in all the output files
+    load(paste("neutral_cluster_", i, ".rda", sep = ""))
 
-    for (inv in 0:length(abundance_list)){
-      # find the number of generations done
-      num_gen <- inv * interval_oct
-      # check if the burn-in time is up
-      if (num_gen > burn_in_generations){
-        # calculating the sum
-        sum_1 <- sum_vect(sum_1, abundance_list[[inv]])
-      }
+    # To determine the number of records during burn-in generations,
+    # we divide the burn-in generations by the inerval_oct,
+    # which should always be 80.
+    # Determine the data used (exclude the first 80, which is during
+    # burn-in generations)
+    abundance_data <- abundance_list[81:length(abundance_list)]
+
+    # calculate the sum for each octave
+    for (j in 1:(length(abundance_data))){
+      sum_octave_1 <- sum_vect(sum_octave_1, abundance_data[[j]])
     }
-    # averaging across time
-    mean_a[i] <- sum_1 / length(abundance_list)
-  }
-  # averaging across the 25 simulations
-  mean_a[26] <- sum(mean_a)/25
+    # mean for each octave
+    mean_octave_1[[i]] <- sum_octave_1 / length(abundance_data)
 
-  # repeat the procedure for other sizes
+    # sum for this community size
+    sum_size_1 <- sum_vect(sum_size_1, mean_octave_1[[i]])
+  }
+  # calculate the mean for this community size
+  mean_size_500 <- sum_size_1 / 25
+
+  # repeat the same procedure for size 1000
   for (i in 26:50){
-    load(paste("demographic_cluster_", i, ".rda", sep = ""))
-    for (inv in 0:length(abundance_list)){
-      num_gen <- inv * interval_oct
-      if (num_gen > burn_in_generations){
-        sum_2 <- sum_vect(sum_2, abundance_list[[inv]])
-      }
-    }
-    mean_b[i-25] <- sum_2 / length(abundance_list)
-  }
-  mean_b[26] <- sum(mean_b)/25
+    sum_octave_2 <- 0
+    load(paste("neutral_cluster_", i, ".rda", sep = ""))
 
+    abundance_data <- abundance_list[81:length(abundance_list)]
+
+    for (j in 1:(length(abundance_data))){
+      sum_octave_2 <- sum_vect(sum_octave_2, abundance_data[[j]])
+    }
+    mean_octave_2[[i-25]] <- sum_octave_2 / length(abundance_data)
+
+    sum_size_2 <- sum_vect(sum_size_2, mean_octave_2[[i-25]])
+  }
+  mean_size_1000 <- sum_size_2 / 25
+
+  # size 2500
   for (i in 51:75){
-    load(paste("demographic_cluster_", i, ".rda", sep = ""))
-    for (inv in 0:length(abundance_list)){
-      num_gen <- inv * interval_oct
-      if (num_gen > burn_in_generations){
-        sum_3 <- sum_vect(sum_3, abundance_list[[inv]])
-      }
-    }
-    mean_c[i-50] <- sum_3 / length(abundance_list)
-  }
-  mean_c[26] <- sum(mean_c) / 25
+    sum_octave_3 <- 0
+    load(paste("neutral_cluster_", i, ".rda", sep = ""))
 
+    abundance_data <- abundance_list[81:length(abundance_list)]
+
+    for (j in 1:(length(abundance_data))){
+      sum_octave_3 <- sum_vect(sum_octave_3, abundance_data[[j]])
+    }
+    mean_octave_3[[i-50]] <- sum_octave_3 / length(abundance_data)
+
+    sum_size_3 <- sum_vect(sum_size_3, mean_octave_3[[i-50]])
+  }
+  mean_size_2500 <- sum_size_3 / 25
+
+  # size 5000
   for (i in 76:100){
-    load(paste("demographic_cluster_", i, ".rda", sep = ""))
-    for (inv in 0:length(abundance_list)){
-      num_gen <- inv * interval_oct
-      if (num_gen > burn_in_generations){
-        sum_4 <- sum_vect(sum_4, abundance_list[[inv]])
-      }
-    }
-    mean_d[i-75] <- sum_4 / length(abundance_list)
-  }
-  mean_d[26] <- sum(mean_d)/25
+    sum_octave_4 <- 0
+    load(paste("neutral_cluster_", i, ".rda", sep = ""))
 
-  # save results to an .rda file
-  combined_results <- list(mean_a, mean_b, mean_c, mean_d)
-  save(combined_results, file = "process_neutral_cluster_results.rda")
+    abundance_data <- abundance_list[81:length(abundance_list)]
+
+    for (j in 1:(length(abundance_data))){
+      sum_octave_4 <- sum_vect(sum_octave_4, abundance_data[[j]])
+    }
+    mean_octave_4[[i-75]] <- sum_octave_4 / length(abundance_data)
+
+    sum_size_4 <- sum_vect(sum_size_4, mean_octave_4[[i-75]])
+  }
+  mean_size_5000 <- sum_size_4 / 25
+
+  # save the results to an .rda file
+  combined_results <- list(mean_size_500, mean_size_1000,
+                    mean_size_2500, mean_size_5000) #create your list output here to return
+  save(combined_results, file = "neutral_cluster_results.rda")
 }
 
-
 plot_neutral_cluster_results <- function(){
-  plot <- vector("list")
+  # load combined_results from your rda file
+  load("neutral_cluster_results.rda")
   sizes <- c(500, 1000, 2500, 5000)
-  for (i in 1:4){
-    p <- barplot(height = combined_results[i], xlab = "Abundance", ylab = "Mean", sub = paste("Data size: ", sizes[i]))
-    plot[[i]] <- p
-  }
+
   png(filename="plot_neutral_cluster_results.png", width = 600, height = 400)
-  print(plot)
+  par(mfrow = c(2, 2))
+  for (i in 1:4){
+    pics <- combined_results[[i]]
+    names(pics) <- c("1", "2", "4", "8", "16", "32")
+    barplot(pics, 
+            main = paste("Mean abundance octave for size ", sizes[i], sep = ""),
+            xlab = "Number of individuals", ylab = "Number of species")
+  }
   Sys.sleep(0.1)
   dev.off()
   
