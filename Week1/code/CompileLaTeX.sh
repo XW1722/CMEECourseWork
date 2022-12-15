@@ -1,21 +1,19 @@
 #!/bin/bash
-# Author: Xuan Wang xuan.wang22@imperial.ac.uk
-#!/bin/bash
-#!/bin/bash
-#!/bin/bash
+pdflatex $1
+bibtex $1.tex
+pdflatex $1
+pdflatex $1
+evince $1.tex.pdf &
 
-x=${1%.tex} #${1%.tex} expands to text
-pdflatex $x.tex
-bibtex $x.aux
-pdflatex $x.tex
-pdflatex $x.tex
-evince $x.pdf &
-
-#cleanup
+## Cleanup
 rm *.aux
+rm *.log
 rm *.bbl
 rm *.blg
-rm *.log
-echo "PDF generated"
+rm *.fls
+rm *.bib
+rm *.fdb_latexmk
 
+# move to the results directory
+mv *.pdf ../results/
 
