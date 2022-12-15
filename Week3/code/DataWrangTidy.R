@@ -4,8 +4,10 @@
 
 ############# Load the dataset ###############
 
+# To run this script, the installation of "tidyverse" package is required.
+# install.packages("tidyverse")
+
 ## loading the package
-install.packages("tidyverse")
 library(tidyr)
 library(dplyr)
 

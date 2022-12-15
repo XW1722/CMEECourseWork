@@ -14,9 +14,11 @@ popn <- rnorm(50)
 
 hist(popn)
 
-result <- lapply(1:15, function(i) try(doit(popn), FALSE))
+# store the errors in result by using "try"
+result <- lapply(1:15, function(i) try(doit(popn), TRUE))
 
+# manual approach
 result <- vector("list", 15) #Preallocate/Initialize
 for(i in 1:15) {
-    result[[i]] <- try(doit(popn), FALSE)
+    result[[i]] <- try(doit(popn), TRUE)
     }

@@ -1,3 +1,4 @@
+require(ggplot2)
 a <- read.table("../data/Results.txt", header = TRUE)
 head(a)
 
