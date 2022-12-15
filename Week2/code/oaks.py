@@ -1,5 +1,12 @@
+"""
+In-class exercise which finds just those taxa that are oaks trees from a list of species.
+"""
+
+__appname__ = "oaks.py"
+
 taxa = ['Quercus robur','Fraxus excelsior', 'Pinus sylvestris','Quercus cerris', 'Quercus petraea']
 def is_an_oak(name):
+    """defines the function which checks if the name starts with quercus"""
     return name.lower().startswith('quercus')
 
 ##Using for loops

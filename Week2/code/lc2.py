@@ -1,3 +1,7 @@
+"""some generation about the rainfall value for each month"""
+
+__appname__ = "lc2.py"
+
 rainfall = (('JAN',111.4),
             ('FEB',126.1),
             ('MAR', 49.9),

@@ -1,3 +1,7 @@
+"""This script uses the dictionary in Python."""
+
+__appname__ = "dictionary.py"
+
 taxa = [ ('Myotis lucifugus','Chiroptera'),
          ('Gerbillus henleyi','Rodentia',),
          ('Peromyscus crinitus', 'Rodentia'),

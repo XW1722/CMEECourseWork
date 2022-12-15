@@ -1,3 +1,7 @@
+"""Debugging functions"""
+
+__appname__ = "oaks_debugme.py"
+
 import csv
 import sys
 import doctest
@@ -22,6 +26,9 @@ def is_an_oak(name):
     return (name == 'Quercus')
 
 def main(argv): 
+
+    """Defines the main function"""
+    
     f = open('../data/TestOaksData.csv','r')
     g = open('../data/JustOaksData.csv','w')
     taxa = csv.reader(f)

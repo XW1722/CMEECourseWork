@@ -1,5 +1,11 @@
+"""This script is used for debugging"""\
+
+__appname__ = "debugme.py"
+
 import ipdb; ipdb.set_trace()
+
 def buggyfunc(x):
+    """This function uses 'try' for debugging."""
     y = x
     for i in range(x):
         try:

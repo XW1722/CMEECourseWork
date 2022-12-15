@@ -32,6 +32,7 @@ def even_or_odd(x=0):
     return f"{x} is Odd!"
 
 def main(argv): 
+    """defines the main entrance"""
     print(even_or_odd(22))
     print(even_or_odd(33))
     return 0

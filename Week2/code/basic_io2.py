@@ -1,3 +1,7 @@
+"""Opening and editing certain file"""
+
+__appname__ = "basic_io2.py"
+
 ############
 # FILE OUTPUT
 ###############

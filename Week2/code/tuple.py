@@ -1,3 +1,7 @@
+"""prints a combination of string and pre-defined elements"""
+
+__appname__ = "tuple.py"
+
 birds = ( ('Passerculus sandwichensis','Savannah sparrow',18.7),
           ('Delichon urbica','House martin',19),
           ('Junco phaeonotus','Yellow-eyed junco',19.5),

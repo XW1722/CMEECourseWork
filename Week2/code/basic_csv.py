@@ -1,3 +1,7 @@
+"""This script reads files containing the required information"""
+
+__appname__ = "basic_csv.py"
+
 import csv
 
 # Read a file containing:

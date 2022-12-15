@@ -1,3 +1,7 @@
+"""This file contains several loops."""
+
+__appname__ = "loops.py"
+
 for i in range(5):
     print(i)
 

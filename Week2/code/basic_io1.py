@@ -1,3 +1,7 @@
+"""Opening and printing lines in file"""
+
+__appname__ = "basic_io1.py"
+
 #############################
 # FILE INPUT
 #############################

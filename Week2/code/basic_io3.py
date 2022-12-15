@@ -1,3 +1,7 @@
+"""Stores objects using the pickle package"""
+
+__appname__ = "basic_io3.py"
+
 #############################
 # STORING OBJECTS
 #############################
