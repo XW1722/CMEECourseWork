@@ -843,25 +843,123 @@ Challenge_D <- function() {
 }
 
 # Challenge question E
-Challenge_E <- function(){
-  
-  
-  
-  png(filename="Challenge_E", width = 600, height = 400)
+# defines the function of deriving the mean life stage at certain time
+mean_step <- function(state){
+  # initialize
+  sum_pop <- 0
+  # summing up the population times i
+  for (i in 1:length(state)){
+    sum_pop <- sum_pop + i * state[i]
+  }
+  # divide by the sum of population in each state to derive 
+  # the mean population state
+  mean <- sum_pop / sum(state)
+  return(mean)
+}
+
+# defining the simulation function which outputs a mean stage time series
+mean_simulation <- function(initial_state, projection_matrix, clutch_distribution, simulation_length){
+  # individual recruitment probability
+  indiv_recruit <- stochastic_recruitment(projection_matrix, clutch_distribution)
+  # initialising
+  state <- initial_state
+  mean_stage <- vector()
+  # the first entry which is the initial mean lifestage
+  mean_stage[1] <- mean_step(state)
+  # loop through each time step and record the corresponding mean life stage
+  for (i in 1:simulation_length){
+    # current state vector
+    state <- stochastic_step(state, projection_matrix, clutch_distribution,
+                              indiv_recruit)
+    mean_stage[i+1] <- mean_step(state)
+  }
+  return(mean_stage)
+}
+
+Challenge_E <- function() {
+  # setting the parameters
+  clutch_distribution <- c(0.06, 0.08, 0.13, 0.15, 0.16, 0.18, 0.15, 0.06, 0.03)
+  projection_matrix <- matrix(c(0.1, 0.6, 0.0, 0.0,
+                                0.0, 0.4, 0.4, 0.0,
+                                0.0, 0.0, 0.7, 0.25,
+                                2.6, 0.0, 0.0, 0.4), nrow = 4, ncol = 4)
+  simulation_length <- 24
+  init_adults <- state_initialise_adult(num_stages = 4, initial_size = 100)
+  init_spread <- state_initialise_spread(num_stages = 4, initial_size = 100)
+
+  # generating the simulations
+  mean_simu_adults <- mean_simulation(init_adults, projection_matrix,
+                                      clutch_distribution, simulation_length)
+  mean_simu_spread <- mean_simulation(init_spread, projection_matrix,
+                                      clutch_distribution, simulation_length)
+  png(filename="Challenge_E.png", width = 600, height = 400)
   # plot your graph here
+  plot(mean_simu_adults, type = "l", col = "red", 
+      xlab = "Time step", ylab = "Mean life stage",
+      main = "Comparison of mean life stage with different initial population state")
+  lines(mean_simu_spread, col = "#46469a")
+  legend("topright", fill = c("red", "#46469a"), legend = c("adults", "spread"))
   Sys.sleep(0.1)
   dev.off()
   
-  return("type your written answer here")
+  return("The simulation with an initial adult population have a much greater
+  variation than the simulation with an initial mixed population at first,
+  and the behavior of the simulations converges to a similar pattern at the
+  end. This is because that at the beginning, the simulation with initial
+  adult populations have greater number of adults. However, the number of
+  adults will decrease by death and number of population in other life stages
+  will increase by recruitment, and therefore number of new-born population
+  will greatly increase, leading to a small mean; at the end, the population
+  will be spreaded by maturation, death, recruitment, hence will converge 
+  with the simulation with initial mixed population.")
 }
 
 # Challenge question F
 Challenge_F <- function(){
-  
-  
-  
-  png(filename="Challenge_F", width = 600, height = 400)
+  # loading the package
+  require(ggplot2)
+
+  # initialising
+  simulation_size <- 120
+  time_step <- vector()
+  initial_condition <- vector()
+  population_size <- vector()
+  population_size_df <- data.frame()
+
+  iter_sets <- list(1:250, 251:500, 501:750, 751:1000)
+  conditions <- c("large_adult", "small_adult", "large_mix", "small_mix")
+
+  # loop through the 1000 simulations
+  for (i in 1:1000){
+    # load the .rda ouput files
+    load(paste("demographic_cluster_", i, ".rda", sep = ""))
+    # loop through each simulation size
+    for (j in 0:simulation_size){
+      for (m in 1:4){
+        if (i >= (min(as.numeric(iter_sets[[m]]))) &&
+            i <= (max(as.numeric(iter_sets[[m]])))){
+          initial_condition[j+1] <- conditions[[m]]
+        }
+      }
+      # record the simulation number
+      simulation_number[j+1] <- i
+      time_step[j+1] <- j
+      population_size[j+1] <- pop_size[j+1]
+    }
+    # create a dataframe for each loop!
+    df <- data.frame(simulation_number, initial_condition, 
+                      time_step, population_size)
+    population_size_df <- rbind(population_size_df, df)
+  }
+  png(filename="Challenge_F.png", width = 600, height = 400)
   # plot your graph here
+  print(ggplot(data = population_size_df, aes(x = time_step, y = population_size)) +
+            geom_line(data = population_size_df, aes(x = time_step, y = population_size,
+                      group = simulation_number, colour = initial_condition),
+                      alpha = 0.1) +
+            theme_bw() +
+            labs(x = "Time step for each simulation", y = "Population size",
+                title = "Cluster simulation results of the population size for different initial conditions"))
   Sys.sleep(0.1)
   dev.off()
   
