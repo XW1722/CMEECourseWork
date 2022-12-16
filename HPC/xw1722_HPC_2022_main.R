@@ -141,12 +141,13 @@ neutral_time_series_speciation <- function(community,speciation_rate,duration)  
 question_12 <- function()  {
   # initialise
   speciation_rate <- 0.1
-  community <- init_community_max(100)
+  community_max <- init_community_max(100)
+  community_min <- init_community_min(100)
   duration <- 200
   # simulations
-  richness_max <- neutral_time_series_speciation(community, speciation_rate, 
-                                                duration)
-  richness_min <- neutral_time_series_speciation(community, speciation_rate,
+  richness_max <- neutral_time_series_speciation(community_max, 
+                                                speciation_rate, duration)
+  richness_min <- neutral_time_series_speciation(community_min, speciation_rate,
                                                 duration)
 
   png(filename="question_12.png", width = 600, height = 400)
@@ -790,19 +791,100 @@ question_37 <- function(){
 
 # Challenge question A
 Challenge_A <- function() {
-  
-  
-  
-  png(filename="Challenge_A_min", width = 600, height = 400)
-  # plot your graph here
-  Sys.sleep(0.1)
-  dev.off()
-  
-  png(filename="Challenge_A_max", width = 600, height = 400)
-  # plot your graph here
-  Sys.sleep(0.1)
-  dev.off()
+  # loading required package
+  require(ggplot2)
 
+  # initialising
+  count <- 0 # count for the number of loops
+  richness_count <- 0 # count for the number of records of species richness
+  speciation_rate <- 0.1
+  mean_richness_max <- 100
+  mean_richness_min <- 0
+
+  community_max <- init_community_max(100)
+  community_min <- init_community_min(100)
+  sum_richness_max <- 0
+  sum_richness_min <- 0
+  standard_deviation <- 1
+
+  # deriving the mean species richness
+  for (i in 1:2200){
+    # update the current community for each loop
+    community_max <- neutral_generation_speciation(
+      community = community_max,
+      speciation_rate = 0.1
+    )
+    community_min <- neutral_generation_speciation(
+      community = community_min,
+      speciation_rate = 0.1
+    )
+    
+    # record the initial species richness after the burn-in period
+    if (count == 200){
+      richness_count <- richness_count + 1
+      mean_richness_max[richness_count] <- species_richness(community_max)
+      mean_richness_min[richness_count] <- species_richness(community_min)
+      # Calculating the lower and upper bound of the 97.2% confidence interval
+      error <- qnorm(0.972) * standard_deviation / richness_count
+
+      upper_max <- mean_richness_max[richness_count] + error
+      upper_min <- mean_richness_min[richness_count] + error
+      lower_max <- mean_richness_min[richness_count] - error
+      lower_min <- mean_richness_min[richness_count] - error
+    } else if (count > 200 && count <= 2200) {
+      # record every 20 generations
+      if ((count - 200) %% 20 == 0){
+        richness_count <- richness_count + 1
+        # calculate the current richness
+        richness_max <- species_richness(community_max)
+        richness_min <- species_richness(community_min)
+        # calculate the sum and the mean
+        sum_richness_max <- sum(sum_richness_max, richness_max)
+        sum_richness_min <- sum(sum_richness_min, richness_min)
+        mean_richness_max[richness_count] <- sum_richness_max / richness_count
+        mean_richness_min[richness_count] <- sum_richness_min / richness_count
+        # Calculating the lower and upper bound of the 97.2% confidence interval
+        error <- qnorm(0.972) * standard_deviation / richness_count
+
+        upper_max <- c(upper_max, mean_richness_max[richness_count] + error)
+        upper_min <- c(upper_min, mean_richness_min[richness_count] + error)
+        lower_max <- c(lower_max, mean_richness_min[richness_count] - error)
+        lower_min <- c(lower_min, mean_richness_min[richness_count] - error)
+      }
+    }
+    count <- count + 1
+  }
+  
+  # combining the results to a dataframe
+  df_max <- data.frame(mean_richness_max, upper_max, lower_max)
+  df_min <- data.frame(mean_richness_min, upper_min, lower_min)
+
+  # plotting the graph
+  png(filename="Challenge_A_min.png", width = 600, height = 400)
+  # plot your graph here
+  print(ggplot(data = df_min, aes(x = seq(1, 100), y = mean_richness_min)) +
+          geom_point() +
+          geom_errorbar(aes(ymin = lower_min, ymax = upper_min)) +
+          theme_bw() +
+          labs(x = "Time", y = "Mean species richness", 
+              title = "Mean species richness against time"))
+  Sys.sleep(0.1)
+  dev.off()
+  
+  png(filename="Challenge_A_max.png", width = 600, height = 400)
+  # plot your graph here
+  print(ggplot(data = df_max, aes(x = seq(1, 100), y = mean_richness_max)) +
+          geom_point() +
+          geom_errorbar(aes(ymin = lower_max, ymax = upper_max)) +
+          theme_bw() +
+          labs(x = "Time", y = "Mean species richness", 
+              title = "Mean species richness against time"))
+  Sys.sleep(0.1)
+  dev.off()
+  
+  return("In general, in the graph generated, it needs around 25 turns to reach
+  the equilibrium, which is 25 * 20(record interval) + 200(burn-in period) = 700
+  generations.")
 }
 
 # Challenge question B
@@ -935,6 +1017,7 @@ Challenge_F <- function(){
     load(paste("demographic_cluster_", i, ".rda", sep = ""))
     # loop through each simulation size
     for (j in 0:simulation_size){
+      # check which initial condition it has
       for (m in 1:4){
         if (i >= (min(as.numeric(iter_sets[[m]]))) &&
             i <= (max(as.numeric(iter_sets[[m]])))){
@@ -949,6 +1032,7 @@ Challenge_F <- function(){
     # create a dataframe for each loop!
     df <- data.frame(simulation_number, initial_condition, 
                       time_step, population_size)
+    # appending the overall dataframe
     population_size_df <- rbind(population_size_df, df)
   }
   png(filename="Challenge_F.png", width = 600, height = 400)
