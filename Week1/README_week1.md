@@ -11,10 +11,13 @@ Bash
 ## Structure:
 
 - fasta exercise (UnixPrac1.txt)
+
 - Shell scripting exercise (ConcatenateTwoFiles.sh ; tabtocsv.sh ; csvtospace.sh)
+
 - LaTeX exercise (CompileLaTeX.sh)
 
 ## Author name and Contact:
 
 Xuan Wang
+
 xuan.wang22@imperial.ac.uk

@@ -239,8 +239,8 @@ question_16 <- function() {
   mean_min <- sum_min / 101
 
   # naming the columns
-  names(mean_max) <- c("1", "2", "4", "8", "16", "32")
-  names(mean_min) <- c("1", "2", "4", "8", "16", "32")
+  names(mean_max) <- c("1", "2~3", "4~7", "8~15", "16~31", "32~63")
+  names(mean_min) <- c("1", "2~3", "4~7", "8~15", "16~31", "32~63")
 
   png(filename="question_16_min.png", width = 600, height = 400)
   barplot(mean_min, xlab = "Number of individuals per species", 
@@ -410,7 +410,7 @@ plot_neutral_cluster_results <- function(){
   par(mfrow = c(2, 2))
   for (i in 1:4){
     pics <- combined_results[[i]]
-    names(pics) <- c("1", "2", "4", "8", "16", "32")
+    names(pics) <- c("1", "2~3", "4~7", "8~15", "16~31", "32~63")
     barplot(pics, 
             main = paste("Mean abundance octave for size ", sizes[i], sep = ""),
             xlab = "Number of individuals", ylab = "Number of species")
