@@ -881,7 +881,7 @@ Challenge_A <- function() {
               title = "Mean species richness against time"))
   Sys.sleep(0.1)
   dev.off()
-  
+
   return("In general, in the graph generated, it needs around 25 turns to reach
   the equilibrium, which is 25 * 20(record interval) + 200(burn-in period) = 700
   generations.")
@@ -889,11 +889,53 @@ Challenge_A <- function() {
 
 # Challenge question B
 Challenge_B <- function() {
+  # load required package for plotting
+  require(ggplot2)
+
+  # initialising
+  community <- vector()
+  averaged_df <- data.frame()
+
+  for (i in 1:100){
+    # initialise for each loop
+    richness <- vector()
+    averaged_richness <- vector()
+
+    # computing the initial community with size 100
+    community <- sample(x = 1:100, size = i, replace = FALSE)
+    richness[1] <- i
+    averaged_richness[1] <- i
+
+    # generating the whole range averaged time series for 200 generations
+    for (j in 1:200){
+      # getting the current community
+      if (length(community) > 1){
+        community <- neutral_generation_speciation(community,
+                                                  speciation_rate = 0.1)
+      }
+      # calculate the current species richness
+      richness[j+1] <- species_richness(community)
+      # calculate the averaged species richness for each generation
+      averaged_richness[j+1] <- sum(richness) / (j+1)
+    }
+
+    # creating a dataframe of averaged time series for each initial community
+    averaged_each <- data.frame(rep(i, 201), seq(1, 201, by = 1), 
+                                averaged_richness)
+    names(averaged_each) <- c("initial_richness", "generations", 
+                                "average_richness")
+    averaged_df <- rbind(averaged_df, averaged_each)
+  }
   
-  
-  
-  png(filename="Challenge_B", width = 600, height = 400)
+  png(filename="Challenge_B.png", width = 600, height = 400)
   # plot your graph here
+  as.factor(averaged_df$initial_richness)
+  print(ggplot(averaged_df, aes(x = generations, y = average_richness)) + 
+          geom_line(data = averaged_df, aes(x = generations, y = average_richness,
+                    group = initial_richness, col = initial_richness)) +
+          theme_bw() +
+          labs(x = "Time (number of generations)", y = "Averaged richness",
+              title = "Averaged time series for a whole range of different intial species richness"))
   Sys.sleep(0.1)
   dev.off()
 
@@ -901,11 +943,60 @@ Challenge_B <- function() {
 
 # Challenge question C
 Challenge_C <- function() {
-  
-  
-  
-  png(filename="Challenge_C", width = 600, height = 400)
+  # initialise
+  richness_each_1 <- vector()
+  richness_each_2 <- vector()
+  richness_each_3 <- vector()
+  richness_each_4 <- vector()
+  richness_mean <- vector()
+
+  # load the results for each size
+  for (i in 1:25){
+    load(paste("neutral_cluster_", i, ".rda", sep = ""))
+
+    # calculating the mean species richness across each simulation
+    richness_each_1[i] <- species_richness(community)
+    richness_mean[i] <- sum(richness_each_1) / i
+  }
+  for (i in 26:50){
+    load(paste("neutral_cluster_", i, ".rda", sep = ""))
+
+    # calculating the mean species richness across each simulation
+    richness_each_2[i-25] <- species_richness(community)
+    richness_mean[i] <- sum(richness_each_2) / (i-25)
+  }
+  for (i in 51:75){
+    load(paste("neutral_cluster_", i, ".rda", sep = ""))
+
+    # calculating the mean species richness across each simulation
+    richness_each_3[i-50] <- species_richness(community)
+    richness_mean[i] <- sum(richness_each_3) / (i-50)
+  }
+  for (i in 76:100){
+    load(paste("neutral_cluster_", i, ".rda", sep = ""))
+
+    # calculating the mean species richness across each simulation
+    richness_each_4[i-75] <- species_richness(community)
+    richness_mean[i] <- sum(richness_each_4) / (i-75)
+  }
+
+  # creating a column to represent the different size
+  size <- c(rep(500, times = 25), rep(1000, times = 25),
+            rep(2500, times = 25), rep(5000, times = 25))
+  # creating a dataframe
+  richness_df <- data.frame(size, richness_mean)
+
+  png(filename="Challenge_C.png", width = 600, height = 400)
   # plot your graph here
+  plot(subset(richness_df, size =="500")$richness_mean, 
+      col = "#9a3838", ylim = c(0, 2600),
+      xlab = "Generation", ylab = "Mean species richness",
+      main = "The mean species richness against simulation length")
+  points(subset(richness_df, size =="1000")$richness_mean, col = "#2f2f6f")
+  points(subset(richness_df, size =="2500")$richness_mean, col = "#b77a09")
+  points(subset(richness_df, size =="5000")$richness_mean, col = "#157115")
+  legend("topright", fill = c("#9a3838", "#2f2f6f", "#b77a09", "#157115"),
+          legend = c("Size 500", "Size 1000", "Size 2500", "Size 5000"))
   Sys.sleep(0.1)
   dev.off()
 
@@ -914,7 +1005,10 @@ Challenge_C <- function() {
 # Challenge question D
 Challenge_D <- function() {
   
-  
+  # initialising
+  lineages <- rep(1, times = J)
+  abundances <- vector()
+  N <- J
   
   png(filename="Challenge_D", width = 600, height = 400)
   # plot your graph here
