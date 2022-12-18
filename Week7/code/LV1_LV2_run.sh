@@ -15,8 +15,10 @@ ipython3 LV2.py 1 0.2 1.5 1.5 60
 echo "Process completed. The results are saved in the results directory."
 
 # profiling
+echo "Start profiling the scripts."
 ipython3 -m cProfile LV1.py
 ipython3 -m cProfile LV2.py 1 0.2 1.5 1.5 60
+echo "Results are shown above!"
 
 
 

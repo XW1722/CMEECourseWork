@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\title{Are temperatures of one year significantly correlated with the next year (successive years), across years in a given location?}
+\author{CMEE Group 3 }
+\date{December 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+There is significant evidence to assume that the temperature of Florida has been increasing over the years 1901 - 2000, and we wish to determine whether there is also a significant correlation between temperature over the successive years themselves.
+
+\section{Method}
+Under the assumption that temperature, the dependant variable is normally distributed, a  two tailed t-test was performed to determine an estimation for the correlation between temperatures across successive years. 
+
+Since observations of the dependent variable (time) are not independent of each-other, a 2 tailed hypothesis test was performed with significance level $\alpha = 0.01$ and with the following null ($H_0$) and alternative ($H_A$) hypotheses, where $r$ is the true correlation, and $r_{observed}$ is the correlation observed within the data.
+ \[ H_0: | r | <  r_{observed}\]
+    \[H_A: |r| \geq r_{observed} \]
+
+The measurements of temperature were permuted and assigned to years randomly for 10 000 trials. For each trial a paired sample t-test was performed on the newly generated data points and the corresponding correlation was recorded. This calculation was then compared with the correlation calculated for the true data, to investigate how likely a correlation as strong as the one observed is to occur within meaningless data.
+
+
+\section{Results}
+The paired sample t-test performed on the first 99 years and their successive years gave an estimated correlation of 0.3261697.
+
+The correlations calculated for the randomly assigned temperature measurements were greater than 0.3261697 (or less than -0.3261697) for only 0.079\% of the trials. This gives an estimated p-value of 0.00079, which is substantially smaller than the significance level $\alpha$.
+
+Therefore, we can reject $H_0$ and conclude that at a 1\% significance level, the data provides significant evidence that the temperature of Florida is positively correlated across successive years.
+
+\end{document}
