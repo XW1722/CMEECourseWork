@@ -55,9 +55,9 @@ Week7 contains some advanced skills in Python, and also an introduction to Jupyt
 
 - Using Python to build workflows
 
-### HPC:
+### xw1722:
 
-The HPC directory contains the High Performance Computing Programming Exercises. The files inside includes:
+This is the HPC directory containing the High Performance Computing Programming Exercises. The files inside includes:
 
 - xw1722_HPC_2022_neutral_cluster.R: The R script used for clustering for the neutral model;
 
