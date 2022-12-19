@@ -6,7 +6,7 @@ from re import L
 import sys
 
 def foo_1(x):
-    """returns 0.5 times the input"""
+    """returns the square root of the input"""
     return x ** 0.5
 
 def foo_2(x, y):
@@ -49,7 +49,7 @@ def foo_6(x):
     return facto
 
 def main(argv):
-    """defines the main entrance"""
+    """defines the main entrance, which prints the results of the functions"""
     print(foo_1(1))
     print(foo_2(2,1))
     print(foo_2(1,2))
@@ -64,5 +64,6 @@ def main(argv):
     return 0
 
 if __name__ == "__main__":
+    # checks whether it is the main entrance
     status = main(sys.argv)
     sys.exit(status)

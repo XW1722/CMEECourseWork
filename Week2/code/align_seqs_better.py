@@ -2,9 +2,15 @@
 
 """
 Script to align two sequences after taking an input from user.
+It saves all the best alignments in binary format.
 If no input is provided the script will run with default arguements.
 All individual functions can work independently!
-Ejoy!
+Enjoy!
+Author: Aditi Madkaikar arm122@ic.ac.uk
+Script: align_seqs_fasta.py
+Descripton: Finding sequence alignment score for two fasta files
+Arguements: Ideally two input fasta files. Can work without any.
+Date: Dec 2022
 """
 
 __author__ = 'Aditi Madkaiakr (arm122@ic.ac.uk)'

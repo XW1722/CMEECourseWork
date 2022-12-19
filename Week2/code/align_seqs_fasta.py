@@ -1,8 +1,17 @@
 #!/usr/bin/env python3
 
+
 """
 Script to align two sequences after taking an input from user.
+It outputs one one best alignment in .csv format. 
 If no input is provided the script will run with default arguements.
+All individual functions can work independently!
+Enjoy!
+Author: Aditi Madkaikar arm122@ic.ac.uk
+Script: align_seqs_fasta.py
+Descripton: Finding sequence alignment score for two fasta files
+Arguements: Ideally two input fasta files. Can work without any.
+Date: Dec 2022
 """
 
 __author__ = 'Aditi Madkaiakr (arm122@ic.ac.uk)'

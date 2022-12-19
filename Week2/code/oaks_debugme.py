@@ -5,10 +5,11 @@ __appname__ = "oaks_debugme.py"
 import csv
 import sys
 import doctest
+
 #Define function
 def is_an_oak(name):
 
-    """ Returns True if name is starts with 'Quercus'.
+    """ Returns True if name is starts with 'quercus'.
 
     >>> is_an_oak('Quercus')
     True
@@ -17,13 +18,13 @@ def is_an_oak(name):
     False
 
     >>> is_an_oak('Quercuss')
-    False
+    True
 
     >>> is_an_oak('Pinus')
     False
     
     """
-    return (name == 'Quercus')
+    return name.lower().startswith('quercus')
 
 def main(argv): 
 
