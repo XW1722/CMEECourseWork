@@ -26,11 +26,20 @@ stochrick <- function(p0 = runif(1000, .5, 1.5), r = 1.2, K = 1, sigma = 0.2,num
 # the extent possible, with improved performance: 
 
 stochrickvect <- function(p0 = runif(1000, .5, 1.5), r = 1.2, K = 1, sigma = 0.2, numyears = 100){
+  # Initialisation
   N <- matrix(NA, numyears, length(p0))
   N[1, ] <- p0
-  for (yr in 2:numyears){
-    N[yr, ] <- N[yr-1, ] * exp(r * (1 - N[yr-1, ] / K) + rnorm(1, 0, sigma))
+
+  # Defining the function for looping through the years
+  loop_years <- function(x){
+    for (yr in 2:numyears){
+      x[yr] <- x[yr-1] * exp(r * (1 - x[yr - 1] / K) + rnorm(1, 0, sigma))
+    }
+    return(x)
   }
+  # Vectorising through the columns, which is the population
+  N <- apply(N, 2, loop_years)
+  
   return(N)
 }
 

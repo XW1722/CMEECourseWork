@@ -3,14 +3,6 @@
 ################################################################
 
 ############# Load the dataset ###############
-
-# To run this script, the installation of "tidyverse" package is required.
-# install.packages("tidyverse")
-
-## loading the package
-library(tidyr)
-library(dplyr)
-
 # header = false because the raw data don't have real headers
 MyData <- as.matrix(read.csv("../data/PoundHillData.csv", header = FALSE))
 
@@ -18,12 +10,11 @@ MyData <- as.matrix(read.csv("../data/PoundHillData.csv", header = FALSE))
 MyMetaData <- read.csv("../data/PoundHillMetaData.csv", header = TRUE, sep = ";")
 
 ############# Inspect the dataset ###############
-
 head(MyData)
 dim(MyData)
 str(MyData)
-fix(MyData)
-fix(MyMetaData)
+# fix(MyData) #you can also do this
+# fix(MyMetaData)
 
 ############# Transpose ###############
 # To get those species into columns and treatments into rows 
@@ -40,13 +31,44 @@ TempData <- as.data.frame(MyData[-1,],stringsAsFactors = F) #stringsAsFactors = 
 colnames(TempData) <- MyData[1,] # assign column names from original data
 
 ############# Convert from wide to long format  ###############
+require(reshape2) # load the reshape2 package
+require(tidyverse)
 
-MyWrangledData <- gather(TempData, key = "Species", value = "Count", 5:ncol(TempData))
+# ?melt #check out the melt function
+######### Changed the melt() funtion to gather() funtion ############
 
-MyWrangledData %>% transmute(Cultivation = as.factor(Cultivation), Block = as.factor(Block), Plot = as.factor(Plot), Quadrat = as.factor(Quadrat), Count = as.integer(Count))
+MyWrangledData <- gather(TempData, key = "Species", value = "Count", -c(Cultivation, Block, Plot, Quadrat))
+
+MyWrangledData[, "Cultivation"] <- as.factor(MyWrangledData[, "Cultivation"])
+MyWrangledData[, "Block"] <- as.factor(MyWrangledData[, "Block"])
+MyWrangledData[, "Plot"] <- as.factor(MyWrangledData[, "Plot"])
+MyWrangledData[, "Quadrat"] <- as.factor(MyWrangledData[, "Quadrat"])
+MyWrangledData[, "Count"] <- as.integer(MyWrangledData[, "Count"])
 
 str(MyWrangledData)
 head(MyWrangledData)
 dim(MyWrangledData)
 
 ############# Exploring the data (extend the script below)  ###############
+
+require(tidyverse)
+
+tidyverse_packages(include_self = TRUE) # the include_self = TRUE means list "tidyverse" as well 
+
+MyWrangledData <- dplyr::as_tibble(MyWrangledData) 
+MyWrangledData
+
+MyWrangledData <- as_tibble(MyWrangledData) 
+class(MyWrangledData)
+glimpse(MyWrangledData) #like str(), but nicer!
+filter(MyWrangledData, Count>100) #like subset(), but nicer!
+
+slice(MyWrangledData, 10:15) # Look at a particular range of data rows
+
+MyWrangledData %>%
+    group_by(Species) %>%
+        summarise(avg = mean(Count))
+
+aggregate(MyWrangledData$Count, list(MyWrangledData$Species), FUN=mean) 
+
+

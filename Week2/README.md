@@ -13,14 +13,25 @@ Python
 
 ## Project structure:
 
-*Task1* - lc1.py, lc2.py, dictionary.py, tuple.py
+**Individual Works**
 
-*Task2* - cfexercises1.py
+*lc1.py, lc2.py, dictionary.py, tuple.py* - Tasks from TheMulQuaBio repository;
 
-*Task3* - align.seqs.py
+*cfexercises1.py* - Write a program with control flows;
 
-*Task4* - oaks_debugme.py
+*align_seqs.py* - Align DNA sequence exercise;
 
+*oaks_debugme.py* - Debug exercise.
+
+**Group Works**
+
+*align_seqs_better.ipynb*
+
+*align_seqs_better.py*
+
+*align_seqs_fasta.py*
+
+*oaks_debugme_groupwork.py*
 
 ## Author name and contact:
 

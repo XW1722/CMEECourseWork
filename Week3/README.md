@@ -13,25 +13,41 @@ R, LaTeX
 
 ## Structure:
 
-*Task 1* - Tree heights - trees.csv
+**Individual Work**
 
-*Task 2* - Vectorisation challenge - Vectorize2.R
+*TreeHeight.R* - Loads *trees.csv* and calculate tree heights in the data;
 
-*Task 3* - Florida getting warmer - Florida.R, Florida.tex, Florida.pdf
+*Vectorize2.R* - Vectorisation challenge
 
-*Task 4* - Data wrangling with tidyverse - DataWrangTidy.R
+*Florida.R, Florida.tex, Florida.pdf* - Florida getting warmer
 
-*Task 5* - Body mass distributions - PP_Dists.R
+*DataWrangTidy.R* - Data wrangling with package *tidyverse*
 
-*Task 6* - Visualizing regression analyses - PP_Regress.R
+*PP_Dists.R* - Body mass distributions
 
-*Task 7* - Mapping - GPDD_Data.R
+*PP_Regress.R* - Visualizing regression analyses
+
+*GPDD_Data.R* - Mapping
+
+**Group Work**
+
+*FloridaYears.tex*
+
+*get_TreeHeight.py*
+
+*get_TreeHeight.R*
+
+*PP_regress_loc.R*
+
+*run_get_TreeHeight.sh*
+
+*TAutoCorr.R*
 
 ## Packages installation
 
 To run the script *GPDD_Data.R*, the *maps* package is needed. Run the following code in R to install the package:
 
-install.packages("maps")
+install.packages(c("maps", "tidyverse"))
 
 
 ## Author name and contact:

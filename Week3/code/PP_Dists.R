@@ -6,7 +6,7 @@ require(ggplot2)
 require(tidyverse)
 require(dplyr)
 
-# changing certain column to factor
+# factorising certain columns
 MyDF$Type.of.feeding.interaction <- as.factor(MyDF$Type.of.feeding.interaction)
 str(MyDF)
 category <- unique(MyDF$Type.of.feeding.interaction)
