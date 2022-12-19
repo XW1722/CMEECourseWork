@@ -795,7 +795,7 @@ Challenge_A <- function() {
   require(ggplot2)
 
   # initialising
-  count <- 0 # count for the number of loops
+  count <- 1 # count for the number of loops
   richness_count <- 0 # count for the number of records of species richness
   speciation_rate <- 0.1
   mean_richness_max <- 100
@@ -803,9 +803,14 @@ Challenge_A <- function() {
 
   community_max <- init_community_max(100)
   community_min <- init_community_min(100)
-  sum_richness_max <- 0
-  sum_richness_min <- 0
+  sum_richness_max <- species_richness(community_max)
+  sum_richness_min <- species_richness(community_min)
   standard_deviation <- 1
+
+  upper_max <- vector()
+  upper_min <- vector()
+  lower_max <- vector()
+  lower_min <- vector()
 
   # deriving the mean species richness
   for (i in 1:2200){
@@ -818,20 +823,9 @@ Challenge_A <- function() {
       community = community_min,
       speciation_rate = 0.1
     )
-    
-    # record the initial species richness after the burn-in period
-    if (count == 200){
-      richness_count <- richness_count + 1
-      mean_richness_max[richness_count] <- species_richness(community_max)
-      mean_richness_min[richness_count] <- species_richness(community_min)
-      # Calculating the lower and upper bound of the 97.2% confidence interval
-      error <- qnorm(0.972) * standard_deviation / richness_count
 
-      upper_max <- mean_richness_max[richness_count] + error
-      upper_min <- mean_richness_min[richness_count] + error
-      lower_max <- mean_richness_min[richness_count] - error
-      lower_min <- mean_richness_min[richness_count] - error
-    } else if (count > 200 && count <= 2200) {
+    # record the mean species richness after the burn-n period
+    if (count >= 200 && count <= 2200) {
       # record every 20 generations
       if ((count - 200) %% 20 == 0){
         richness_count <- richness_count + 1
@@ -862,7 +856,7 @@ Challenge_A <- function() {
   # plotting the graph
   png(filename="Challenge_A_min.png", width = 600, height = 400)
   # plot your graph here
-  print(ggplot(data = df_min, aes(x = seq(1, 100), y = mean_richness_min)) +
+  print(ggplot(data = df_min, aes(x = seq(1, 101), y = mean_richness_min)) +
           geom_point() +
           geom_errorbar(aes(ymin = lower_min, ymax = upper_min)) +
           theme_bw() +
@@ -873,7 +867,7 @@ Challenge_A <- function() {
   
   png(filename="Challenge_A_max.png", width = 600, height = 400)
   # plot your graph here
-  print(ggplot(data = df_max, aes(x = seq(1, 100), y = mean_richness_max)) +
+  print(ggplot(data = df_max, aes(x = seq(1, 101), y = mean_richness_max)) +
           geom_point() +
           geom_errorbar(aes(ymin = lower_max, ymax = upper_max)) +
           theme_bw() +
